@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django_filters',
     'storages',
     'graphene_django',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    "graphql_auth",
 
     # My Apps
     'Auth.apps.AuthConfig'
@@ -55,11 +57,26 @@ GRAPHENE = {
     'SCHEMA_OUTPUT': 'data/schema.json',
     'MIDDLEWARE': [
         'graphene_django.debug.DjangoDebugMiddleware',
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ]
+}
+
+AUTHENTICATION_BACKENDS = [
+    # 'graphql_jwt.backends.JSONWebTokenBackend',
+    "graphql_auth.backends.GraphQLAuthBackend",
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+
+    # optional
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,6 +86,7 @@ MIDDLEWARE = [
 
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -159,3 +177,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'Auth.Usuario'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

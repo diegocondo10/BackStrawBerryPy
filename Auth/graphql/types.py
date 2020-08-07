@@ -16,8 +16,13 @@ class AplicacionType(DjangoObjectType):
 
 
 class PermisoType(DjangoObjectType):
+    aplicacion_id = graphene.ID()
+
     class Meta:
         model = Permiso
+
+    def resolve_aplicacion_id(self, info):
+        return self.aplicacion.id
 
 
 class GrupoType(DjangoObjectType):

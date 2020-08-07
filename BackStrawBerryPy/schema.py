@@ -2,6 +2,7 @@ import graphene
 from graphene_django.debug import DjangoDebug
 
 from Auth.graphql.queries import AuthQueries
+from Auth.schema import AuthMutations
 
 
 class RootQueries(AuthQueries, graphene.ObjectType, ):
@@ -11,4 +12,8 @@ class RootQueries(AuthQueries, graphene.ObjectType, ):
         description = 'Consultas disponibles'
 
 
-schema = graphene.Schema(query=RootQueries)
+class RootMutation(AuthMutations, graphene.ObjectType):
+    pass
+
+
+schema = graphene.Schema(query=RootQueries, mutation=RootMutation)

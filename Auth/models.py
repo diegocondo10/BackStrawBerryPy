@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -26,12 +27,12 @@ class Permiso(BaseModel):
 class Grupo(BaseModel):
     nombre = models.CharField(max_length=150)
     descripcion = models.TextField(null=True, blank=True)
-    permisos = models.ManyToManyField(Aplicacion)
+    permisos = models.ManyToManyField(Permiso)
 
 
-class Usuario(BaseModel):
-    username = models.CharField(max_length=150)
-    password = models.TextField()
+class Usuario(AbstractUser):
     email = models.EmailField()
     grupos = models.ManyToManyField(Grupo)
     permisos = models.ManyToManyField(Permiso)
+
+    USERNAME_FIELD = "username"
