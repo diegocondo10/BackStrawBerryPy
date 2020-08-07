@@ -135,9 +135,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ipca_dev',
-        'USER': 'postgres',
-        'PASSWORD': '3113',
-        'HOST': 'localhost',
+        'USER': 'django',
+        'PASSWORD': 'fll2019*',
+        'HOST': '34.70.2.34',
         'PORT': '5432',
     }
 }
