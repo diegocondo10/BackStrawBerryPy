@@ -33,5 +33,11 @@ class AuthQueries(graphene.ObjectType):
     def resolve_grupo(self, info, id):
         return Grupo.objects.filter(id=id).first()
 
+    def resolve_grupos(self, info):
+        return Grupo.objects.all()
+
     def resolve_usuario(self, info, id):
         return Usuario.objects.filter(id=id).first()
+
+    def resolve_usuarios(self, info):
+        return Usuario.objects.all()
