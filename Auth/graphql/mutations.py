@@ -1,4 +1,5 @@
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
+from graphql_jwt.decorators import login_required
 
 from Auth.models import Aplicacion, Permiso, Grupo, Usuario
 
@@ -51,11 +52,20 @@ class DeleteGrupoMutation(DjangoDeleteMutation):
 class CreateUsuarioMutation(DjangoCreateMutation):
     class Meta:
         model = Usuario
+        optional_fields = ('password',)
+
+    @classmethod
+    def after_mutate(cls, root, info, obj: Usuario, return_data):
+        obj.password = '1234ABC'
+        obj.set_password(obj.password)
+        obj.save()
+        return super().after_mutate(root, info, obj, return_data)
 
 
 class UpdateUsuarioMutation(DjangoUpdateMutation):
     class Meta:
         model = Usuario
+        optional_fields = ('password',)
 
 
 class DeleteUsuarioMutation(DjangoDeleteMutation):
