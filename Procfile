@@ -1,1 +1,1 @@
-web: gunicorn BackStrawBerryPy.wsgy
+web: gunicorn BackStrawBerryPy.wsgi
