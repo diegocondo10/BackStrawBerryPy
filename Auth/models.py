@@ -2,8 +2,10 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
 
-
 # Create your models here.
+from BackStrawBerryPy.models import BaseModel
+from Personas.models import Persona
+
 
 class UserManager(BaseUserManager):
 
@@ -29,15 +31,6 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
 
         return self._create_user(username, password, **extra_fields)
-
-
-class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    auth_estado = models.CharField(max_length=10, default='A')
-
-    class Meta:
-        abstract = True
 
 
 class Aplicacion(BaseModel):
@@ -66,6 +59,8 @@ class Usuario(PermissionsMixin, AbstractBaseUser, BaseModel):
     permisos = models.ManyToManyField(Permiso, blank=True)
     first_name = models.CharField(default="NO REGISTRA", null=True, max_length=150)
     last_name = models.CharField(default="NO REGISTRA", null=True, max_length=150)
+
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = "username"
     EMAIL_FIELD = 'email'

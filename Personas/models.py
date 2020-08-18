@@ -1,8 +1,7 @@
-from django.contrib.postgres.forms import JSONField
 from django.db import models
 
 # Create your models here.
-from Auth.models import BaseModel
+from BackStrawBerryPy.models import BaseModel
 
 
 class Persona(BaseModel):
@@ -22,19 +21,22 @@ class Persona(BaseModel):
     edad = models.PositiveSmallIntegerField()
     # ubicacion = models.CharField()
     # nacionalidad = models.
-    calle_principal = models.CharField(max_length=150)
-    calle_secundaria = models.CharField(max_length=150)
-    lugar_referencia = models.CharField(max_length=150)
-    numero_casa = models.CharField(max_length=30)
-    telefono = models.CharField(max_length=20)
-    celular = models.CharField(max_length=20)
-    correo = models.CharField(max_length=30)
-    discapacidad = models.CharField(max_length=5, )
-    nivel_discapacidad = models.PositiveSmallIntegerField()
-    carnet_conadis = models.CharField(null=True, blank=True)
-    ocupacion = models.CharField(max_length=120)
-    nivel_formacion = models.CharField(max_length=255, )
-    extras = JSONField()
+    calle_principal = models.CharField(max_length=150, null=True, blank=True)
+    calle_secundaria = models.CharField(max_length=150, null=True, blank=True)
+    lugar_referencia = models.CharField(max_length=150, null=True, blank=True)
+    numero_casa = models.CharField(max_length=30, null=True, blank=True)
+    telefono = models.CharField(max_length=20, null=True, blank=True)
+    celular = models.CharField(max_length=20, null=True, blank=True)
+    correo = models.CharField(max_length=30, null=True, blank=True)
+    discapacidad = models.CharField(max_length=5, null=True, blank=True)
+    nivel_discapacidad = models.PositiveSmallIntegerField(null=True, blank=True)
+    carnet_conadis = models.CharField(max_length=50, null=True, blank=True)
+    ocupacion = models.CharField(max_length=120, null=True, blank=True)
+    nivel_formacion = models.CharField(max_length=255, null=True, blank=True)
+    extras = models.JSONField()
+
+
+'''
 
 
 class Estudiante(BaseModel):
@@ -75,7 +77,7 @@ class Pasante(BaseModel):
     numero_horas_diarias = models.PositiveSmallIntegerField()
 
 
-''''
+
 class Aula(BaseModel):
     espcialidades = models.ManyToManyField(Especialidad)
     terapeutas = models.ManyToManyField(Especialidad)

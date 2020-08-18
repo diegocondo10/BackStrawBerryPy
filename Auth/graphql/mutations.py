@@ -1,5 +1,4 @@
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
-from graphql_jwt.decorators import login_required
 
 from Auth.models import Aplicacion, Permiso, Grupo, Usuario
 
