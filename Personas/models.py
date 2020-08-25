@@ -35,6 +35,12 @@ class Persona(BaseModel):
     nivel_formacion = models.CharField(max_length=255, null=True, blank=True)
     extras = models.JSONField()
 
+    def full_name(self):
+        return f'{self.primer_nombre} {self.primer_apellido}'
+
+    def __str__(self):
+        return f'{self.identificacion} {self.full_name()}'
+
 
 '''
 
