@@ -1,11 +1,24 @@
-import graphene
+from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
-from Personas.graphql.types import PersonaType
-from Personas.models import Persona
+from Personas.models import Persona, Discapacidad
 
 
-class PersonasQueries(graphene.ObjectType):
-    personas = graphene.List(PersonaType)
+class CreatePersonaMutation(DjangoCreateMutation):
+    class Meta:
+        model = Persona
+        exclude_fields = ('extras',)
 
-    def resolve_personas(self, info, **kwargs):
-        return Persona.objects.all()
+
+class CreateDiscapacidadMutation(DjangoCreateMutation):
+    class Meta:
+        model = Discapacidad
+
+
+class UpdateDiscapacidadMutation(DjangoUpdateMutation):
+    class Meta:
+        model = Discapacidad
+
+
+class DeleteDiscapacidadMutation(DjangoDeleteMutation):
+    class Meta:
+        model = Discapacidad
