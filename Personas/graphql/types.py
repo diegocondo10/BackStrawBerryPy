@@ -5,7 +5,7 @@ from Personas.models import Persona, Discapacidad
 
 
 class PersonaType(DjangoObjectType):
-    full_name = graphene.String()
+    full_name = graphene.String(description='Nombre de la persona')
     str = graphene.String()
 
     class Meta:
@@ -18,6 +18,8 @@ class PersonaType(DjangoObjectType):
     def resolve_str(self: Persona, info, **kwargs):
         return self.__str__()
 
+    def resolve_discapacidades_disponibles(self: Persona, info):
+        return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
 
 class DiscapacidadType(DjangoObjectType):
     class Meta:

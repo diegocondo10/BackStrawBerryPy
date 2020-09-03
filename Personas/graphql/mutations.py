@@ -8,6 +8,14 @@ class CreatePersonaMutation(DjangoCreateMutation):
         model = Persona
         exclude_fields = ('extras',)
 
+class UpdatePersonaMutation(DjangoUpdateMutation):
+    class Meta:
+        model = Persona
+
+class DeletePersonaMutation(DjangoDeleteMutation):
+    class Meta:
+        model = Persona
+
 
 class CreateDiscapacidadMutation(DjangoCreateMutation):
     class Meta:
