@@ -15,8 +15,8 @@ class PersonasQueries(graphene.ObjectType):
     def resolve_personas(self, info, **kwargs):
         return Persona.objects.all().order_by("id")
 
-    def resolve_persona(self,info, **kwargs):
-        return Persona.objects.filter(id=id).first()
+    def resolve_persona(self, info, id):
+        return Persona.objects.filter(pk=id).first()
 
     def resolve_discapacidades(self, info, **kwargs):
         return Discapacidad.objects.all()

@@ -4,9 +4,15 @@ from graphene_django import DjangoObjectType
 from Personas.models import Persona, Discapacidad
 
 
+class DiscapacidadType(DjangoObjectType):
+    class Meta:
+        model = Discapacidad
+
+
 class PersonaType(DjangoObjectType):
     full_name = graphene.String(description='Nombre de la persona')
     str = graphene.String()
+    discapacidades_disponibles = graphene.List(DiscapacidadType)
 
     class Meta:
         model = Persona
@@ -20,7 +26,3 @@ class PersonaType(DjangoObjectType):
 
     def resolve_discapacidades_disponibles(self: Persona, info):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
-
-class DiscapacidadType(DjangoObjectType):
-    class Meta:
-        model = Discapacidad
