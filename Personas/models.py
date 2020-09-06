@@ -41,8 +41,8 @@ class Persona(BaseModel):
     # DISCAPACIDADES
     tiene_discapacidad = models.CharField(max_length=10, default="NO")
     discapacidades = models.ManyToManyField(Discapacidad, blank=True)
-    nivel_discapacidad = models.PositiveSmallIntegerField(null=True, blank=True)
-    carnet_conadis = models.CharField(max_length=50, null=True, blank=True)
+    carnet_conadis = models.CharField(max_length=50, default='NO REGISTRA')
+    porcentaje_discapacidad = models.PositiveSmallIntegerField(default=0)
 
     ocupacion = models.CharField(max_length=120, null=True, blank=True)
     nivel_formacion = models.CharField(max_length=255, null=True, blank=True)
@@ -56,7 +56,6 @@ class Persona(BaseModel):
 
 
 '''
-
 
 class Estudiante(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
