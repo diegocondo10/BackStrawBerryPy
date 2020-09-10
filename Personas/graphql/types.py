@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from Personas.models import Persona, Discapacidad
+from Personas.models import Persona, Discapacidad, Docente
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -26,3 +26,8 @@ class PersonaType(DjangoObjectType):
 
     def resolve_discapacidades_disponibles(self: Persona, info):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
+
+
+class DocenteType(DjangoObjectType):
+    class Meta:
+        model = Docente

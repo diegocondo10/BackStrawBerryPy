@@ -55,6 +55,15 @@ class Persona(BaseModel):
         return f'{self.identificacion} {self.full_name()}'
 
 
+class Docente(BaseModel):
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    # titulo = models.CharField(max_length=120) NUEVO CRUD
+    codigo = models.CharField(max_length=50, null=True, blank=True)
+    tipo_titulo = models.CharField(max_length=120)
+    titulo = models.CharField(max_length=255)
+    observaciones = models.TextField(null=True, blank=True)
+
+
 '''
 
 class Estudiante(BaseModel):
@@ -68,13 +77,7 @@ class Estudiante(BaseModel):
     extras = JSONField()
 
 
-class Docente(BaseModel):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    # titulo = models.CharField(max_length=120) NUEVO CRUD
-    tipo_titulo = models.CharField(max_length=120)
-    nivel_formacion = models.CharField(max_length=80)
-    extras = JSONField()
-    historial = JSONField()
+
 
 
 class Especialidad(BaseModel):
