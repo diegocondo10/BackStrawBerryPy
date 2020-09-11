@@ -65,15 +65,14 @@ class Docente(BaseModel):
 
 
 class Estudiante(BaseModel):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    padre = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    madre = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    representante = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='persona_fk')
+    padre = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='padre_fk')
+    madre = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='madre_fk')
+    representante = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='representante_fk')
     relacion_representante = models.CharField(max_length=100)
 
     # observaciones = models.TextField() dentro de extras
-    extras = JSONField()
-
+    extras = models.JSONField()
 
 
 '''
