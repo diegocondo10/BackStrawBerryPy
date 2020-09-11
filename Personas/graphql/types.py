@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from Personas.models import Persona, Discapacidad, Docente
+from Personas.models import Persona, Discapacidad, Docente, Estudiante
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -31,3 +31,8 @@ class PersonaType(DjangoObjectType):
 class DocenteType(DjangoObjectType):
     class Meta:
         model = Docente
+
+class EstudianteType(DjangoObjectType):
+    class Meta:
+        model = Estudiante
+        exclude = ('extras',)

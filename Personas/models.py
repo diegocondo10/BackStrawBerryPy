@@ -64,8 +64,6 @@ class Docente(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
 
-'''
-
 class Estudiante(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     padre = models.ForeignKey(Persona, on_delete=models.CASCADE)
@@ -78,7 +76,7 @@ class Estudiante(BaseModel):
 
 
 
-
+'''
 
 class Especialidad(BaseModel):
     nombre = models.CharField()
