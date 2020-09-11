@@ -72,7 +72,7 @@ class Estudiante(BaseModel):
     relacion_representante = models.CharField(max_length=100)
 
     # observaciones = models.TextField() dentro de extras
-    extras = JSONField()
+    extras = models.JSONField(null=True, blank=True)
 
 
 
