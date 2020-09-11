@@ -50,15 +50,18 @@ class DeleteDocenteMutation(DjangoDeleteMutation):
     class Meta:
         model = Docente
 
+
 class CreateEstudianteMutation(DjangoCreateMutation):
     class Meta:
         model = Estudiante
         exclude_fields = ('extras',)
 
+
 class UpdateEstudianteMutation(DjangoUpdateMutation):
     class Meta:
         model = Estudiante
         exclude_fields = ('extras',)
+
 
 class DeleteEstudianteMutation(DjangoDeleteMutation):
     class Meta:

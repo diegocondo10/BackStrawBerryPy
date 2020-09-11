@@ -1,7 +1,7 @@
 import graphene
 import graphene_django
 
-from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType
+from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType
 from Personas.models import Persona, Discapacidad, Docente, Estudiante
 
 
@@ -11,6 +11,10 @@ class PersonasQueries(graphene.ObjectType):
     personas_no_docentes = graphene.List(PersonaType)
 
     docentes = graphene.List(DocenteType)
+    docente = graphene.Field(DocenteType, id=graphene.ID(required=True))
+
+    estudiantes = graphene.List(EstudianteType)
+    estudiante = graphene.Field(EstudianteType, id=graphene.ID(required=True))
 
     discapacidades = graphene.List(DiscapacidadType)
     discapacidad = graphene.Field(DiscapacidadType, id=graphene.ID(required=True))
@@ -34,7 +38,6 @@ class PersonasQueries(graphene.ObjectType):
 
     def resolve_docente(self, info, id):
         return Docente.objects.filter(pk=id).first()
-    
 
     def resolve_estudiantes(self, info):
         return Estudiante.objects.all().order_by('persona__primer_apellido')

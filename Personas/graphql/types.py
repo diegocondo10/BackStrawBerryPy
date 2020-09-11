@@ -32,6 +32,7 @@ class DocenteType(DjangoObjectType):
     class Meta:
         model = Docente
 
+
 class EstudianteType(DjangoObjectType):
     class Meta:
         model = Estudiante
