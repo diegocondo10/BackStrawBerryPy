@@ -34,6 +34,7 @@ class PersonasQueries(graphene.ObjectType):
 
     def resolve_docente(self, info, id):
         return Docente.objects.filter(pk=id).first()
+    
 
     def resolve_estudiantes(self, info):
         return Estudiante.objects.all().order_by('persona__primer_apellido')
