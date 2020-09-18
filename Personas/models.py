@@ -75,7 +75,6 @@ class Estudiante(BaseModel):
     extras = models.JSONField(null=True, blank=True)
 
 
-
 '''
 
 class Especialidad(BaseModel):

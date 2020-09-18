@@ -9,6 +9,7 @@ class PersonasQueries(graphene.ObjectType):
     personas = graphene.List(PersonaType)
     persona = graphene.Field(PersonaType, id=graphene.ID(required=True))
     personas_no_docentes = graphene.List(PersonaType)
+    personas_no_estudiantes = graphene.List(PersonaType)
 
     docentes = graphene.List(DocenteType)
     docente = graphene.Field(DocenteType, id=graphene.ID(required=True))
