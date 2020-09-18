@@ -70,12 +70,10 @@ class Estudiante(BaseModel):
     representante = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='representante_fk')
     relacion_representante = models.CharField(max_length=100)
     observaciones = models.TextField(null=True, blank=True)
-    # observaciones = models.TextField() dentro de extras
     extras = models.JSONField(null=True, blank=True)
 
 
 '''
-
 class Especialidad(BaseModel):
     nombre = models.CharField()
     descripcion = models.TextField()
