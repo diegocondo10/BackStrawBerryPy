@@ -24,7 +24,6 @@ class Persona(BaseModel):
     # idioma = models.CharField(max_length=30, )
     tipo_sangre = models.CharField(max_length=30, )
     fecha_nacimiento = models.DateField(null=True, blank=True)
-    edad = models.PositiveSmallIntegerField(null=True, blank=True)
     # ubicacion = models.CharField()
     # nacionalidad = models.
 
@@ -70,7 +69,7 @@ class Estudiante(BaseModel):
     madre = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='madre_fk')
     representante = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='representante_fk')
     relacion_representante = models.CharField(max_length=100)
-
+    observaciones = models.TextField(null=True, blank=True)
     # observaciones = models.TextField() dentro de extras
     extras = models.JSONField(null=True, blank=True)
 
