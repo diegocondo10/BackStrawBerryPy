@@ -97,3 +97,48 @@ class Aula(BaseModel):
     espcialidades = models.ManyToManyField(Especialidad)
     terapeutas = models.ManyToManyField(Especialidad)
 '''
+
+
+class PeriodoLectivo(BaseModel):
+    nombre = models.CharField(max_length=155)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    estado = models.CharField(max_length=30)
+    fecha_fin_clases = models.DateField()
+    observacion = models.TextField(null=True, blank=True)
+    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo')
+
+
+class ResponsablePeriodo(BaseModel):
+    periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
+    responsable = models.ForeignKey(Docente, on_delete=models.CASCADE)
+    rol = models.CharField(max_length=155)
+
+
+class Aula(BaseModel):
+    nombre = models.CharField(max_length=50)
+    numero = models.PositiveSmallIntegerField()
+    # TODO: averiguar si tiene jornada
+    capacidad = models.PositiveSmallIntegerField()
+    grado = models.PositiveSmallIntegerField()
+    estudiantes = models.ManyToManyField(Estudiante, through='EstudianteAula')
+    docentes = models.ManyToManyField(Docente)
+    periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
+
+
+class EstudianteAula(BaseModel):
+    aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    nota_final = models.DecimalField(max_digits=6, decimal_places=2)
+    numero_faltas = models.PositiveSmallIntegerField(default=0)
+    notas = models.ManyToManyField('Nota', through='NotaEstudiante')
+
+
+class NotaEstudiante(BaseModel):
+    estudiante_aula = models.ForeignKey(EstudianteAula, on_delete=models.CASCADE)
+    nota = models.ForeignKey('Nota', on_delete=models.CASCADE)
+
+
+class Nota(BaseModel):
+    valor = models.DecimalField(decimal_places=2, max_digits=6, default=0)
+    observaciones = models.TextField(null=True, blank=True)
