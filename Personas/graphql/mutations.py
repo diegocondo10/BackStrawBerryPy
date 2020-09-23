@@ -1,6 +1,6 @@
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
-from Personas.models import Persona, Discapacidad, Docente, Estudiante
+from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula
 
 
 class CreatePersonaMutation(DjangoCreateMutation):
@@ -67,3 +67,27 @@ class DeleteEstudianteMutation(DjangoDeleteMutation):
     class Meta:
         model = Estudiante
         exclude_fields = ('extras',)
+
+class CreatePeriodoLectivoMutation(DjangoCreateMutation):
+    class Meta:
+        model = PeriodoLectivo
+
+class UpdatePeriodoLectivoMutation(DjangoUpdateMutation):
+    class Meta:
+        model = PeriodoLectivo
+
+class DeletePeriodoLectivoMutation(DjangoDeleteMutation):
+    class Meta:
+        model = PeriodoLectivo
+
+class CreateAulaMutation(DjangoCreateMutation):
+    class Meta:
+        model = Aula
+
+class UpdateAulaMutation(DjangoUpdateMutation):
+    class Meta:
+        model = Aula
+
+class DeleteAulaMutation(DjangoDeleteMutation):
+    class Meta:
+        model = Aula

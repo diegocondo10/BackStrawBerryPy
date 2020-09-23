@@ -1,13 +1,12 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from Personas.models import Persona, Discapacidad, Docente, Estudiante
+from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula
 
 
 class DiscapacidadType(DjangoObjectType):
     class Meta:
         model = Discapacidad
-
 
 class PersonaType(DjangoObjectType):
     full_name = graphene.String(description='Nombre de la persona')
@@ -32,8 +31,15 @@ class DocenteType(DjangoObjectType):
     class Meta:
         model = Docente
 
-
 class EstudianteType(DjangoObjectType):
     class Meta:
         model = Estudiante
         exclude = ('extras',)
+
+class PeriodoLectivoType(DjangoObjectType):
+    class Meta:
+        model = PeriodoLectivo
+
+class AulaType(DjangoObjectType):
+    class Meta:
+        model = Aula

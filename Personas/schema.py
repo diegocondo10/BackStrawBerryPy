@@ -19,3 +19,11 @@ class PersonasMutations(graphene.ObjectType):
     create_estudiante = CreateEstudianteMutation.Field()
     update_estudiante = UpdateEstudianteMutation.Field()
     delete_estudiante = DeleteEstudianteMutation.Field()
+
+    create_periodo_lectivo = CreatePeriodoLectivoMutation.Field()
+    update_periodo_lectivo = UpdatePeriodoLectivoMutation.Field()
+    delete_periodo_lectivo = DeletePeriodoLectivoMutation.Field()
+
+    create_aula = CreateAulaMutation.Field()
+    update_aula = UpdateAulaMutation.Field()
+    delete_aula = DeleteAulaMutation.Field()

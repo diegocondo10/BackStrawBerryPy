@@ -1,8 +1,8 @@
 import graphene
 import graphene_django
 
-from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType
-from Personas.models import Persona, Discapacidad, Docente, Estudiante
+from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType, PeriodoLectivoType, AulaType
+from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula
 
 
 class PersonasQueries(graphene.ObjectType):
@@ -19,6 +19,12 @@ class PersonasQueries(graphene.ObjectType):
 
     discapacidades = graphene.List(DiscapacidadType)
     discapacidad = graphene.Field(DiscapacidadType, id=graphene.ID(required=True))
+
+    periodos_lectivos = graphene.List(PeriodoLectivoType)
+    periodo_lectivo = graphene.Field(PeriodoLectivoType, id=graphene.ID(required=True))
+
+    aulas = graphene.List(AulaType)
+    aula = graphene.Field(AulaType, id=graphene.ID(required=True))
 
     def resolve_personas(self, info, **kwargs):
         return Persona.objects.all().order_by("primer_apellido")
@@ -51,3 +57,15 @@ class PersonasQueries(graphene.ObjectType):
 
     def resolve_discapacidad(self, info, id):
         return Discapacidad.objects.filter(pk=id).first()
+
+    def resolve_periodo_lectivo(self, info, id):
+        return PeriodoLectivo.objects.filter(pk=id).first()
+
+    def resolve_periodos_lectivos(self, info, **kwargs):
+        return PeriodoLectivo.objects.all()
+
+    def resolve_aula(self, info, id):
+        return Aula.objects.filter(pk=id).first()
+
+    def resolve_aulas(self, info, **kwargs):
+        return Aula.objects.all()
