@@ -70,6 +70,8 @@ class Estudiante(BaseModel):
     representante = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='representante_fk')
     relacion_representante = models.CharField(max_length=100)
     observaciones = models.TextField(null=True, blank=True)
+    contacto_emergencia = models.CharField(max_length=255, null=True, blank=True)
+    informacion_contacto_emergencia = models.CharField(max_length=255, null=True, blank=True)
     extras = models.JSONField(null=True, blank=True)
 
 
