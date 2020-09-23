@@ -107,8 +107,8 @@ class PeriodoLectivo(BaseModel):
     fecha_fin = models.DateField()
     estado = models.CharField(max_length=30)
     fecha_fin_clases = models.DateField()
-    observacion = models.TextField(null=True, blank=True)
-    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo')
+    observaciones = models.TextField(null=True, blank=True)
+    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo', null=True, blank=True)
 
 
 class ResponsablePeriodo(BaseModel):
