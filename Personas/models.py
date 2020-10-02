@@ -135,6 +135,17 @@ class Aula(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
 
+
+class Materia(BaseModel):
+    nombre = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=20)
+    grado = models.PositiveSmallIntegerField()
+    horas_presencial = models.TextField(null=True, blank=True)
+    descripcion = models.CharField(max_length=50)
+    objetivo = models.CharField(max_length=50)
+    objetivo_especifico = models.CharField(max_length=50)
+
+
 class EstudianteAula(BaseModel):
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
