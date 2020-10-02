@@ -135,10 +135,6 @@ class Aula(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
 
-class Materia(BaseModel):
-    nombre =
-
-
 class EstudianteAula(BaseModel):
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
