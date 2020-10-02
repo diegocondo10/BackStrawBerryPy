@@ -129,7 +129,7 @@ class Aula(BaseModel):
     # TODO: averiguar si tiene jornada
     capacidad = models.PositiveSmallIntegerField()
     grado = models.PositiveSmallIntegerField()
-    estudiantes = models.ManyToManyField(Estudiante, through='EstudianteAula')
+    estudiantes = models.ManyToManyField(Estudiante, through='EstudianteAula', blank=True)
     docentes = models.ManyToManyField(Docente)
     periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
     observaciones = models.TextField(null=True, blank=True)
