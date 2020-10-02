@@ -8,6 +8,7 @@ class DiscapacidadType(DjangoObjectType):
     class Meta:
         model = Discapacidad
 
+
 class PersonaType(DjangoObjectType):
     full_name = graphene.String(description='Nombre de la persona')
     str = graphene.String()
@@ -31,14 +32,17 @@ class DocenteType(DjangoObjectType):
     class Meta:
         model = Docente
 
+
 class EstudianteType(DjangoObjectType):
     class Meta:
         model = Estudiante
         exclude = ('extras',)
 
+
 class PeriodoLectivoType(DjangoObjectType):
     class Meta:
         model = PeriodoLectivo
+
 
 class AulaType(DjangoObjectType):
     class Meta:

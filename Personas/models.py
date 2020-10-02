@@ -62,6 +62,12 @@ class Docente(BaseModel):
     titulo = models.CharField(max_length=255)
     observaciones = models.TextField(null=True, blank=True)
 
+    def full_name(self):
+        return self.persona.full_name()
+
+    def __str__(self):
+        return self.persona.__str__()
+
 
 class Estudiante(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='persona_fk')
@@ -108,7 +114,7 @@ class PeriodoLectivo(BaseModel):
     estado = models.CharField(max_length=30)
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
-    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo', null=True, blank=True)
+    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo')
 
 
 class ResponsablePeriodo(BaseModel):
@@ -119,13 +125,18 @@ class ResponsablePeriodo(BaseModel):
 
 class Aula(BaseModel):
     nombre = models.CharField(max_length=50)
-    numero = models.PositiveSmallIntegerField()
+    # numero = models.PositiveSmallIntegerField(null=True)
     # TODO: averiguar si tiene jornada
     capacidad = models.PositiveSmallIntegerField()
     grado = models.PositiveSmallIntegerField()
     estudiantes = models.ManyToManyField(Estudiante, through='EstudianteAula')
     docentes = models.ManyToManyField(Docente)
     periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
+    observaciones = models.TextField(null=True, blank=True)
+
+
+class Materia(BaseModel):
+    nombre =
 
 
 class EstudianteAula(BaseModel):
