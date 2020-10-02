@@ -135,6 +135,7 @@ class Aula(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
 
+<<<<<<< HEAD
 class Materia(BaseModel):
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=20)
@@ -145,6 +146,8 @@ class Materia(BaseModel):
     objetivo_especifico = models.CharField(max_length=50)
 
 
+=======
+>>>>>>> a7a4f528afee0257ddbc40657c5063c12daded97
 class EstudianteAula(BaseModel):
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
