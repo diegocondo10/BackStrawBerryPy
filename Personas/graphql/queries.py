@@ -1,8 +1,8 @@
 import graphene
 import graphene_django
 
-from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType, PeriodoLectivoType, AulaType
-from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula
+from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType, PeriodoLectivoType, AulaType, MateriaType
+from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
 
 
 class PersonasQueries(graphene.ObjectType):
@@ -25,6 +25,9 @@ class PersonasQueries(graphene.ObjectType):
 
     aulas = graphene.List(AulaType)
     aula = graphene.Field(AulaType, id=graphene.ID(required=True))
+
+    materias = graphene.List(MateriaType)
+    materia = graphene.Field(MateriaType, id=graphene.ID(required=True))
 
     def resolve_personas(self, info, **kwargs):
         return Persona.objects.all().order_by("primer_apellido")
@@ -69,3 +72,9 @@ class PersonasQueries(graphene.ObjectType):
 
     def resolve_aulas(self, info, **kwargs):
         return Aula.objects.all()
+
+    def resolve_materia(self, info, id):
+        return Materia.objects.filter(pk=id).first()
+
+    def resolve_materias(self, info, **kwargs):
+        return Materia.objects.all()

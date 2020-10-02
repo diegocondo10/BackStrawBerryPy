@@ -136,7 +136,13 @@ class Aula(BaseModel):
 
 
 class Materia(BaseModel):
-    nombre =
+    nombre = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=20)
+    grado = models.PositiveSmallIntegerField()
+    horas_presencial = models.TextField(null=True, blank=True)
+    descripcion = models.CharField(max_length=50)
+    objetivo = models.CharField(max_length=50)
+    objetivo_especifico = models.CharField(max_length=50)
 
 
 class EstudianteAula(BaseModel):

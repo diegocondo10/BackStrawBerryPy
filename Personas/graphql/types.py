@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula
+from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -47,3 +47,7 @@ class PeriodoLectivoType(DjangoObjectType):
 class AulaType(DjangoObjectType):
     class Meta:
         model = Aula
+
+class MateriaType(DjangoObjectType):
+    class Meta:
+        model = Materia
