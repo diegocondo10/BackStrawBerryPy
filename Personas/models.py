@@ -135,7 +135,6 @@ class Aula(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
 
-
 class Materia(BaseModel):
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=20)
