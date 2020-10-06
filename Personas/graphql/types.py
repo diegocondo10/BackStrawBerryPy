@@ -1,4 +1,5 @@
 import graphene
+from django.db.models import Q
 from graphene_django import DjangoObjectType
 
 from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
@@ -13,6 +14,7 @@ class PersonaType(DjangoObjectType):
     full_name = graphene.String(description='Nombre de la persona')
     str = graphene.String()
     discapacidades_disponibles = graphene.List(DiscapacidadType)
+    representados = graphene.List(lambda: EstudianteType)
 
     class Meta:
         model = Persona
@@ -26,6 +28,9 @@ class PersonaType(DjangoObjectType):
 
     def resolve_discapacidades_disponibles(self: Persona, info):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
+
+    def resolve_representados(self: Persona, info):
+        return Estudiante.objects.filter(Q(padre__pk=self.id) | Q(madre__pk=self.id) | Q(representante__pk=self.id))
 
 
 class DocenteType(DjangoObjectType):
@@ -47,6 +52,7 @@ class PeriodoLectivoType(DjangoObjectType):
 class AulaType(DjangoObjectType):
     class Meta:
         model = Aula
+
 
 class MateriaType(DjangoObjectType):
     class Meta:
