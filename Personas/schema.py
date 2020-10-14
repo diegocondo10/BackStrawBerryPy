@@ -1,5 +1,3 @@
-import graphene
-
 from Personas.graphql.mutations import *
 
 
@@ -19,15 +17,3 @@ class PersonasMutations(graphene.ObjectType):
     create_Alumno = CreateAlumnoMutation.Field()
     update_Alumno = UpdateAlumnoMutation.Field()
     delete_Alumno = DeleteAlumnoMutation.Field()
-
-    create_periodo_lectivo = CreatePeriodoLectivoMutation.Field()
-    update_periodo_lectivo = UpdatePeriodoLectivoMutation.Field()
-    delete_periodo_lectivo = DeletePeriodoLectivoMutation.Field()
-
-    create_aula = CreateAulaMutation.Field()
-    update_aula = UpdateAulaMutation.Field()
-    delete_aula = DeleteAulaMutation.Field()
-
-    create_materia = CreateMateriaMutation.Field()
-    update_materia = UpdateMateriaMutation.Field()
-    delete_materia = DeleteMateriaMutation.Field()

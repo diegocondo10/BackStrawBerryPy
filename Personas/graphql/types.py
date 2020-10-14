@@ -1,8 +1,7 @@
 import graphene
-from django.db.models import Q
 from graphene_django import DjangoObjectType
 
-from Personas.models import Persona, Discapacidad, Docente, Alumno, PeriodoLectivo, Aula, Materia
+from Personas.models import Persona, Discapacidad, Docente, Alumno
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -60,18 +59,3 @@ class AlumnoType(DjangoObjectType):
 
     def resolve_representante(self, info):
         return self.representante
-
-
-class PeriodoLectivoType(DjangoObjectType):
-    class Meta:
-        model = PeriodoLectivo
-
-
-class AulaType(DjangoObjectType):
-    class Meta:
-        model = Aula
-
-
-class MateriaType(DjangoObjectType):
-    class Meta:
-        model = Materia

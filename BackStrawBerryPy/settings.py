@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     # My Apps
     'Auth.apps.AuthConfig',
     'Utils.apps.UtilsConfig',
-    'Personas.apps.PersonasConfig'
+    'Personas.apps.PersonasConfig',
+    'Matriculas.apps.MatriculasConfig'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
