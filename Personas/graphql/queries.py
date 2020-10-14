@@ -42,7 +42,7 @@ class PersonasQueries(graphene.ObjectType):
     def resolve_alumnos(self, info):
         return Alumno.objects.all().order_by('persona__primer_apellido')
 
-    def resolve_alumnos(self, info, id):
+    def resolve_alumno(self, info, id):
         return Alumno.objects.filter(pk=id).first()
 
     def resolve_discapacidades(self, info, **kwargs):
