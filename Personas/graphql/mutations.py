@@ -2,7 +2,7 @@ import graphene
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
 from Personas.graphql.inputs import PadreDeFamiliaInput
-from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
+from Personas.models import Persona, Discapacidad, Docente, Alumno, PeriodoLectivo, Aula, Materia
 
 
 class CreatePersonaMutation(DjangoCreateMutation):
@@ -53,9 +53,9 @@ class DeleteDocenteMutation(DjangoDeleteMutation):
         model = Docente
 
 
-class CreateEstudianteMutation(DjangoCreateMutation):
+class CreateAlumnoMutation(DjangoCreateMutation):
     class Meta:
-        model = Estudiante
+        model = Alumno
         field_types = {
             "padre": graphene.InputField(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
@@ -64,9 +64,9 @@ class CreateEstudianteMutation(DjangoCreateMutation):
         }
 
 
-class UpdateEstudianteMutation(DjangoUpdateMutation):
+class UpdateAlumnoMutation(DjangoUpdateMutation):
     class Meta:
-        model = Estudiante
+        model = Alumno
         field_types = {
             "padre": graphene.InputField(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
@@ -75,9 +75,9 @@ class UpdateEstudianteMutation(DjangoUpdateMutation):
         }
 
 
-class DeleteEstudianteMutation(DjangoDeleteMutation):
+class DeleteAlumnoMutation(DjangoDeleteMutation):
     class Meta:
-        model = Estudiante
+        model = Alumno
 
 
 class CreatePeriodoLectivoMutation(DjangoCreateMutation):

@@ -1,8 +1,8 @@
 import graphene
 import graphene_django
 
-from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, EstudianteType, PeriodoLectivoType, AulaType, MateriaType
-from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
+from Personas.graphql.types import PersonaType, DiscapacidadType, DocenteType, AlumnoType, PeriodoLectivoType, AulaType, MateriaType
+from Personas.models import Persona, Discapacidad, Docente, Alumno, PeriodoLectivo, Aula, Materia
 
 
 class PersonasQueries(graphene.ObjectType):
@@ -14,8 +14,8 @@ class PersonasQueries(graphene.ObjectType):
     docentes = graphene.List(DocenteType)
     docente = graphene.Field(DocenteType, id=graphene.ID(required=True))
 
-    estudiantes = graphene.List(EstudianteType)
-    estudiante = graphene.Field(EstudianteType, id=graphene.ID(required=True))
+    alumnos = graphene.List(AlumnoType)
+    alumno = graphene.Field(AlumnoType, id=graphene.ID(required=True))
 
     discapacidades = graphene.List(DiscapacidadType)
     discapacidad = graphene.Field(DiscapacidadType, id=graphene.ID(required=True))
@@ -40,7 +40,7 @@ class PersonasQueries(graphene.ObjectType):
         return Persona.objects.exclude(id__in=personas_docentes).order_by('primer_apellido')
 
     def resolve_personas_no_estudiantes(self, info, **kwargs):
-        personas_estudiantes = Estudiante.objects.values_list('persona_id').all()
+        personas_estudiantes = Alumno.objects.values_list('persona_id').all()
         return Persona.objects.exclude(id__in=personas_estudiantes).order_by('primer_apellido')
 
     def resolve_docentes(self, info):
@@ -50,10 +50,10 @@ class PersonasQueries(graphene.ObjectType):
         return Docente.objects.filter(pk=id).first()
 
     def resolve_estudiantes(self, info):
-        return Estudiante.objects.all().order_by('persona__primer_apellido')
+        return Alumno.objects.all().order_by('persona__primer_apellido')
 
     def resolve_estudiante(self, info, id):
-        return Estudiante.objects.filter(pk=id).first()
+        return Alumno.objects.filter(pk=id).first()
 
     def resolve_discapacidades(self, info, **kwargs):
         return Discapacidad.objects.all()

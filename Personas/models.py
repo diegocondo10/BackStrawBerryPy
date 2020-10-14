@@ -72,7 +72,7 @@ class Docente(BaseModel):
         return self.persona.__str__()
 
 
-class Estudiante(BaseModel):
+class Alumno(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='persona_fk')
 
     padre = JSONField(null=True, blank=True)
@@ -134,7 +134,7 @@ class Aula(BaseModel):
     # TODO: averiguar si tiene jornada
     capacidad = models.PositiveSmallIntegerField()
     grado = models.PositiveSmallIntegerField()
-    estudiantes = models.ManyToManyField(Estudiante, through='EstudianteAula', blank=True)
+    estudiantes = models.ManyToManyField(Alumno, through='EstudianteAula', blank=True)
     docentes = models.ManyToManyField(Docente)
     periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
     observaciones = models.TextField(null=True, blank=True)
@@ -152,14 +152,14 @@ class Materia(BaseModel):
 
 class EstudianteAula(BaseModel):
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     nota_final = models.DecimalField(max_digits=6, decimal_places=2)
     numero_faltas = models.PositiveSmallIntegerField(default=0)
     notas = models.ManyToManyField('Nota', through='NotaEstudiante')
 
 
 class NotaEstudiante(BaseModel):
-    estudiante_aula = models.ForeignKey(EstudianteAula, on_delete=models.CASCADE)
+    alumno_aula = models.ForeignKey(EstudianteAula, on_delete=models.CASCADE)
     nota = models.ForeignKey('Nota', on_delete=models.CASCADE)
 
 
