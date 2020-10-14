@@ -1,5 +1,7 @@
+import graphene
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
+from Personas.graphql.inputs import PadreDeFamiliaInput
 from Personas.models import Persona, Discapacidad, Docente, Estudiante, PeriodoLectivo, Aula, Materia
 
 
@@ -54,51 +56,69 @@ class DeleteDocenteMutation(DjangoDeleteMutation):
 class CreateEstudianteMutation(DjangoCreateMutation):
     class Meta:
         model = Estudiante
-        exclude_fields = ('extras',)
+        field_types = {
+            "padre": graphene.InputField(PadreDeFamiliaInput),
+            "madre": graphene.InputField(PadreDeFamiliaInput),
+            "representante": graphene.InputField(PadreDeFamiliaInput),
+            "contacto_emergencia": graphene.InputField(PadreDeFamiliaInput),
+        }
 
 
 class UpdateEstudianteMutation(DjangoUpdateMutation):
     class Meta:
         model = Estudiante
-        exclude_fields = ('extras',)
+        field_types = {
+            "padre": graphene.InputField(PadreDeFamiliaInput),
+            "madre": graphene.InputField(PadreDeFamiliaInput),
+            "representante": graphene.InputField(PadreDeFamiliaInput),
+            "contacto_emergencia": graphene.InputField(PadreDeFamiliaInput),
+        }
 
 
 class DeleteEstudianteMutation(DjangoDeleteMutation):
     class Meta:
         model = Estudiante
-        exclude_fields = ('extras',)
+
 
 class CreatePeriodoLectivoMutation(DjangoCreateMutation):
     class Meta:
         model = PeriodoLectivo
 
+
 class UpdatePeriodoLectivoMutation(DjangoUpdateMutation):
     class Meta:
         model = PeriodoLectivo
+
 
 class DeletePeriodoLectivoMutation(DjangoDeleteMutation):
     class Meta:
         model = PeriodoLectivo
 
+
 class CreateAulaMutation(DjangoCreateMutation):
     class Meta:
         model = Aula
+
 
 class UpdateAulaMutation(DjangoUpdateMutation):
     class Meta:
         model = Aula
 
+
 class DeleteAulaMutation(DjangoDeleteMutation):
     class Meta:
         model = Aula
+
 
 class CreateMateriaMutation(DjangoCreateMutation):
     class Meta:
         model = Materia
 
+
 class UpdateMateriaMutation(DjangoUpdateMutation):
     class Meta:
         model = Materia
+
 
 class DeleteMateriaMutation(DjangoDeleteMutation):
     class Meta:

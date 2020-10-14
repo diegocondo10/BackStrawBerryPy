@@ -1,7 +1,10 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-# Create your models here.
 from BackStrawBerryPy.models import BaseModel
+
+
+# Create your models here.
 
 
 class Discapacidad(BaseModel):
@@ -71,14 +74,16 @@ class Docente(BaseModel):
 
 class Estudiante(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='persona_fk')
-    padre = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='padre_fk')
-    madre = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='madre_fk')
-    representante = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='representante_fk')
-    relacion_representante = models.CharField(max_length=100)
+
+    padre = JSONField(null=True, blank=True)
+
+    madre = JSONField(null=True, blank=True)
+
+    representante = JSONField(null=True, blank=True)
+
+    contacto_emergencia = JSONField(null=True, blank=True)
+
     observaciones = models.TextField(null=True, blank=True)
-    contacto_emergencia = models.CharField(max_length=255, null=True, blank=True)
-    informacion_contacto_emergencia = models.CharField(max_length=255, null=True, blank=True)
-    extras = models.JSONField(null=True, blank=True)
 
 
 '''

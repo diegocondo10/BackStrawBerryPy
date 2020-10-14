@@ -29,8 +29,13 @@ class PersonaType(DjangoObjectType):
     def resolve_discapacidades_disponibles(self: Persona, info):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
 
-    def resolve_representados(self: Persona, info):
-        return Estudiante.objects.filter(Q(padre__pk=self.id) | Q(madre__pk=self.id) | Q(representante__pk=self.id))
+
+class PadreDeFamiliaType(graphene.ObjectType):
+    identificacion = graphene.String()
+    primer_nombre = graphene.String()
+    segundo_nombre = graphene.String()
+    primer_apellido = graphene.String()
+    segundo_apellido = graphene.String()
 
 
 class DocenteType(DjangoObjectType):
@@ -39,9 +44,22 @@ class DocenteType(DjangoObjectType):
 
 
 class EstudianteType(DjangoObjectType):
+    padre = graphene.Field(PadreDeFamiliaType)
+    madre = graphene.Field(PadreDeFamiliaType)
+    representante = graphene.Field(PadreDeFamiliaType)
+    contacto_emergencia = graphene.Field(PadreDeFamiliaType)
+
     class Meta:
         model = Estudiante
-        exclude = ('extras',)
+
+    def resolve_padre(self, info):
+        return self.padre
+
+    def resolve_madre(self, info):
+        return self.madre
+
+    def resolve_representante(self, info):
+        return self.representante
 
 
 class PeriodoLectivoType(DjangoObjectType):

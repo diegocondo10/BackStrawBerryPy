@@ -4,6 +4,7 @@ from graphene_django.debug import DjangoDebug
 from Auth.graphql.queries import AuthQueries
 from Auth.schema import AuthMutations
 from Personas.graphql.queries import PersonasQueries
+# from Personas.schema import PersonasMutations
 from Personas.schema import PersonasMutations
 
 
@@ -14,7 +15,11 @@ class RootQueries(AuthQueries, PersonasQueries, graphene.ObjectType, ):
         description = 'Consultas disponibles'
 
 
-class RootMutation(AuthMutations, PersonasMutations, graphene.ObjectType):
+class RootMutation(
+    AuthMutations,
+    PersonasMutations,
+    graphene.ObjectType
+):
     pass
 
 
