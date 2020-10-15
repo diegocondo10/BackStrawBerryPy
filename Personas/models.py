@@ -73,7 +73,7 @@ class Docente(BaseModel):
 
 
 class Alumno(BaseModel):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='persona_fk')
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='alumno')
 
     padre = JSONField(null=True, blank=True)
 
