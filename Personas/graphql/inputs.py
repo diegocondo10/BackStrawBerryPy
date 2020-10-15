@@ -1,9 +1,7 @@
 import graphene
 
+from Personas.graphql.interfaces import PadreDeFamiliaInterface
 
-class PadreDeFamiliaInput(graphene.InputObjectType):
-    identificacion = graphene.String()
-    primer_nombre = graphene.String()
-    segundo_nombre = graphene.String()
-    primer_apellido = graphene.String()
-    segundo_apellido = graphene.String()
+
+class PadreDeFamiliaInput(graphene.InputObjectType, PadreDeFamiliaInterface):
+    pass

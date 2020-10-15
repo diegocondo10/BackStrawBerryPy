@@ -1,6 +1,11 @@
+from collections import namedtuple
+
 import graphene
+from graphene.types import unmountedtype
+from graphene.types.unmountedtype import UnmountedType
 from graphene_django import DjangoObjectType
 
+from Personas.graphql.interfaces import PadreDeFamiliaInterface
 from Personas.models import Persona, Discapacidad, Docente, Alumno
 
 
@@ -29,12 +34,8 @@ class PersonaType(DjangoObjectType):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
 
 
-class PadreDeFamiliaType(graphene.ObjectType):
-    identificacion = graphene.String()
-    primer_nombre = graphene.String()
-    segundo_nombre = graphene.String()
-    primer_apellido = graphene.String()
-    segundo_apellido = graphene.String()
+class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
+    pass
 
 
 class DocenteType(DjangoObjectType):

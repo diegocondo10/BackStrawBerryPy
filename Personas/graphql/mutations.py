@@ -1,7 +1,9 @@
 import graphene
+from graphene import InputField
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
 from Personas.graphql.inputs import PadreDeFamiliaInput
+from Personas.graphql.types import PadreDeFamiliaType
 from Personas.models import Persona, Discapacidad, Docente, Alumno
 
 
@@ -57,7 +59,7 @@ class CreateAlumnoMutation(DjangoCreateMutation):
     class Meta:
         model = Alumno
         field_types = {
-            "padre": graphene.InputField(PadreDeFamiliaInput),
+            "padre": graphene.Field(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
             "representante": graphene.InputField(PadreDeFamiliaInput),
             "contacto_emergencia": graphene.InputField(PadreDeFamiliaInput),
@@ -78,4 +80,3 @@ class UpdateAlumnoMutation(DjangoUpdateMutation):
 class DeleteAlumnoMutation(DjangoDeleteMutation):
     class Meta:
         model = Alumno
-
