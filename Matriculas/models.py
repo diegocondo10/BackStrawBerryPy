@@ -14,7 +14,7 @@ class PeriodoLectivo(BaseModel):
     estado = models.CharField(max_length=30)
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
-    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo')
+    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo', default=[])
     '''
         PREGUNTAS:
             - Si hay responsables por periodo lectivo y cuantos son?
