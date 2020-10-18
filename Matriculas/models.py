@@ -75,7 +75,7 @@ class AlumnoAula(BaseModel):
     tratamiento = models.TextField()
     diagnostico = models.TextField()
     matricula = models.TextField()
-    numero_matricula = models.CharField(max_length=155)
+    numero_matricula = models.CharField(max_length=155, default='')
     aporte_voluntario = models.DecimalField(decimal_places=2, max_digits=6)
     diagnostico_final = models.TextField(null=True, blank=True)
     faltas = JSONField(default=[])
