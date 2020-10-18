@@ -39,4 +39,4 @@ class MatriculasQueries(graphene.ObjectType):
         return AlumnoAula.objects.all()
 
     def resolve_matricula(self, info, id):
-        return AlumnoAula.objects.filter(pk=id)
+        return AlumnoAula.objects.filter(pk=id).first()
