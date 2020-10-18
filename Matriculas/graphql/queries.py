@@ -1,7 +1,7 @@
 import graphene
 
-from Matriculas.graphql.types import PeriodoLectivoType, AulaType, MateriaType, AlumnoAulaType
-from Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
+from Matriculas.graphql.types import PeriodoLectivoType, AulaType, MateriaType, AlumnoAulaType, NotaMateriaType
+from Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula, NotaMateria
 
 
 class MatriculasQueries(graphene.ObjectType):
@@ -16,6 +16,9 @@ class MatriculasQueries(graphene.ObjectType):
 
     matriculas = graphene.List(AlumnoAulaType)
     matricula = graphene.Field(AlumnoAulaType, id=graphene.ID(required=True))
+
+    nota_materias = graphene.List(NotaMateriaType)
+    nota_materia = graphene.Field(NotaMateriaType, id=graphene.ID(required=True))
 
     def resolve_periodo_lectivo(self, info, id):
         return PeriodoLectivo.objects.filter(pk=id).first()
@@ -40,3 +43,9 @@ class MatriculasQueries(graphene.ObjectType):
 
     def resolve_matricula(self, info, id):
         return AlumnoAula.objects.filter(pk=id).first()
+
+    def resolve_nota_materias(self, info, **kwargs):
+        return NotaMateria.objects.all()
+
+    def resolve_nota_materia(self, info, id):
+        return NotaMateria.objects.filter(pk=id)
