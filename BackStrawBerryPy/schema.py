@@ -9,7 +9,12 @@ from Personas.graphql.queries import PersonasQueries
 from Personas.schema import PersonasMutations
 
 
-class RootQueries(AuthQueries, PersonasQueries, MatriculasQueries, graphene.ObjectType, ):
+class RootQueries(
+    AuthQueries,
+    PersonasQueries,
+    MatriculasQueries,
+    graphene.ObjectType,
+):
     debug = graphene.Field(DjangoDebug, name='_debug')
 
     class Meta:

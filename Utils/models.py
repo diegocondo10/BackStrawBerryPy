@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 # Create your models here.
@@ -8,4 +9,4 @@ class Parametros(BaseModel):
     codigo = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
-    value = models.JSONField()
+    value = JSONField()
