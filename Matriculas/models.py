@@ -15,18 +15,15 @@ class PeriodoLectivo(BaseModel):
     estado = models.CharField(max_length=30)
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
-    responsables = models.ManyToManyField(Docente, through='ResponsablePeriodo', default=[])
+    responsables = JSONField(null=True, blank=True)
     '''
         PREGUNTAS:
             - Si hay responsables por periodo lectivo y cuantos son?
         
     '''
 
-
-class ResponsablePeriodo(BaseModel):
-    periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
-    responsable = models.ForeignKey(Docente, on_delete=models.CASCADE)
-    rol = models.CharField(max_length=155)
+    class Meta:
+        db_table = 'PeriodoLectivo'
 
 
 class Aula(BaseModel):
@@ -48,6 +45,9 @@ class Aula(BaseModel):
             - Los docentes dan la misma materia?
     '''
 
+    class Meta:
+        db_table = 'Aula'
+
 
 class Materia(BaseModel):
     nombre = models.CharField(max_length=50)
@@ -65,6 +65,9 @@ class Materia(BaseModel):
             
     '''
 
+    class Meta:
+        db_table = 'Materia'
+
 
 # MATRICULA
 class AlumnoAula(BaseModel):
@@ -80,7 +83,7 @@ class AlumnoAula(BaseModel):
     diagnostico_final = models.TextField(null=True, blank=True)
     faltas = JSONField(default=[])
 
-    def crear_notas(self):
+    def generar_matricula(self):
         materias = Materia.objects.filter(grado=self.aula.grado)
         for materia in materias:
             nota_materia = NotaMateria()
@@ -115,6 +118,9 @@ class AlumnoAula(BaseModel):
         
     '''
 
+    class Meta:
+        db_table = 'AlumnoAula'
+
 
 # MallaAlumno
 class NotaMateria(BaseModel):
@@ -145,3 +151,6 @@ class NotaMateria(BaseModel):
             ]
             
     '''
+
+    class Meta:
+        db_table = 'NotaMateria'

@@ -12,6 +12,9 @@ class Discapacidad(BaseModel):
     descripcion = models.TextField(null=True, blank=True)
     porcentaje = models.PositiveSmallIntegerField(null=True)
 
+    class Meta:
+        db_table = 'Discapacidad'
+
 
 class Persona(BaseModel):
     identificacion = models.CharField(max_length=30, unique=True)
@@ -56,6 +59,9 @@ class Persona(BaseModel):
     def __str__(self):
         return f'{self.identificacion} {self.full_name()}'
 
+    class Meta:
+        db_table = 'Persona'
+
 
 class Docente(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
@@ -71,6 +77,9 @@ class Docente(BaseModel):
     def __str__(self):
         return self.persona.__str__()
 
+    class Meta:
+        db_table = 'Docente'
+
 
 class Alumno(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='alumno')
@@ -84,3 +93,6 @@ class Alumno(BaseModel):
     contacto_emergencia = JSONField(null=True, blank=True)
 
     observaciones = models.TextField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'Alumno'

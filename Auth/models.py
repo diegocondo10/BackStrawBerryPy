@@ -37,17 +37,26 @@ class Aplicacion(BaseModel):
     nombre = models.CharField(max_length=120)
     descripcion = models.TextField(null=True, blank=True)
 
+    class Meta:
+        db_table = 'Aplicacion'
+
 
 class Permiso(BaseModel):
     nombre = models.CharField(max_length=120)
     descripcion = models.TextField(null=True, blank=True)
     aplicacion = models.ForeignKey(Aplicacion, on_delete=models.CASCADE)
 
+    class Meta:
+        db_table = 'Permiso'
+
 
 class Grupo(BaseModel):
     nombre = models.CharField(max_length=150)
     descripcion = models.TextField(null=True, blank=True)
     permisos = models.ManyToManyField(Permiso)
+
+    class Meta:
+        db_table = 'Grupo'
 
 
 class Usuario(PermissionsMixin, AbstractBaseUser, BaseModel):
@@ -67,3 +76,6 @@ class Usuario(PermissionsMixin, AbstractBaseUser, BaseModel):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    class Meta:
+        db_table = 'Usuario'

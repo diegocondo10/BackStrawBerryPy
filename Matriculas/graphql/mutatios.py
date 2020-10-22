@@ -56,13 +56,19 @@ class CreateAlumnoAulaMutation(DjangoCreateMutation):
 
     @classmethod
     def after_mutate(cls, root, info, obj: AlumnoAula, return_data):
-        obj.crear_notas()
+        print('INFO: ', info)
+        obj.generar_matricula()
         return super().after_mutate(root, info, obj, return_data)
 
 
 class UpdateAlumnoAulaMutation(DjangoUpdateMutation):
     class Meta:
         model = AlumnoAula
+
+    @classmethod
+    def after_mutate(cls, root, info, obj: AlumnoAula, return_data):
+        print('INFO: ', info)
+        return super().after_mutate(root, info, obj, return_data)
 
 
 class DeleteAlumnoAulaMutation(DjangoDeleteMutation):

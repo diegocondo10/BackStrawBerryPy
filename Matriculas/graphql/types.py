@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from Matriculas.models import PeriodoLectivo, Aula, Materia, ResponsablePeriodo, AlumnoAula, NotaMateria
+from Matriculas.models import PeriodoLectivo, Aula, Materia,  AlumnoAula, NotaMateria
 
 
 class PeriodoLectivoType(DjangoObjectType):
@@ -9,9 +9,6 @@ class PeriodoLectivoType(DjangoObjectType):
         model = PeriodoLectivo
 
 
-class ResponsablePeriodoType(DjangoObjectType):
-    class Meta:
-        model = ResponsablePeriodo
 
 
 class AulaType(DjangoObjectType):

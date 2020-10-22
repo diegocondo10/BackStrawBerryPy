@@ -17,8 +17,10 @@ Including another URLconf
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
+from graphql_jwt.decorators import jwt_cookie
 
 from BackStrawBerryPy.schema import schema
+from Personas import views
 
 urls_api = [
     path('auth/', include('Auth.router')),
@@ -27,5 +29,6 @@ urls_api = [
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('api/v1/', include(urls_api)),
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
+    path('api/v1/mis-alumnos/<str:identificacion>', views.mis_alumnos),
+    path('graphql', csrf_exempt(jwt_cookie(GraphQLView.as_view(graphiql=True, schema=schema)))),
 ]

@@ -1,4 +1,8 @@
 import graphene
+from graphql import GraphQLError
+from graphql.error import GraphQLLocatedError
+from graphql_auth.exceptions import GraphQLAuthError
+from graphql_jwt.decorators import login_required
 
 from Matriculas.graphql.types import PeriodoLectivoType, AulaType, MateriaType, AlumnoAulaType, NotaMateriaType
 from Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula, NotaMateria
@@ -38,7 +42,10 @@ class MatriculasQueries(graphene.ObjectType):
     def resolve_materias(self, info, **kwargs):
         return Materia.objects.all()
 
+    # @login_required
     def resolve_matriculas(self, info, **kwargs):
+        print(info)
+        # return GraphQLError('ERROR', extensions={'test': 'prueba'})
         return AlumnoAula.objects.all()
 
     def resolve_matricula(self, info, id):

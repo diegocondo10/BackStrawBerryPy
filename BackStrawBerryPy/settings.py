@@ -73,7 +73,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_VERIFY_EXPIRATION": False,
 
     # optional
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
@@ -85,6 +85,7 @@ GRAPHQL_JWT = {
     ],
 
 }
+
 
 GRAPHQL_AUTH = {
     'LOGIN_ALLOWED_FIELDS': ['email', 'username'],
@@ -106,6 +107,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
