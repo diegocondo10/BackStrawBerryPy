@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from BackStrawBerryPy.models import BaseModel
@@ -84,13 +83,13 @@ class Docente(BaseModel):
 class Alumno(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='alumno')
 
-    padre = JSONField(null=True, blank=True)
+    padre = models.JSONField(null=True, blank=True)
 
-    madre = JSONField(null=True, blank=True)
+    madre = models.JSONField(null=True, blank=True)
 
-    representante = JSONField(null=True, blank=True)
+    representante = models.JSONField(null=True, blank=True)
 
-    contacto_emergencia = JSONField(null=True, blank=True)
+    contacto_emergencia = models.JSONField(null=True, blank=True)
 
     observaciones = models.TextField(null=True, blank=True)
 

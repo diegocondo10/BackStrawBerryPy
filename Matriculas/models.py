@@ -1,11 +1,10 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
-
-# Create your models here.
-
 
 from BackStrawBerryPy.models import BaseModel
 from Personas.models import Docente, Alumno
+
+
+# Create your models here.
 
 
 class PeriodoLectivo(BaseModel):
@@ -15,7 +14,7 @@ class PeriodoLectivo(BaseModel):
     estado = models.CharField(max_length=30)
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
-    responsables = JSONField(null=True, blank=True)
+    responsables = models.JSONField(null=True, blank=True)
     '''
         PREGUNTAS:
             - Si hay responsables por periodo lectivo y cuantos son?
@@ -81,16 +80,18 @@ class AlumnoAula(BaseModel):
     numero_matricula = models.CharField(max_length=155, default='')
     aporte_voluntario = models.DecimalField(decimal_places=2, max_digits=6)
     diagnostico_final = models.TextField(null=True, blank=True)
-    faltas = JSONField(default=[])
+    faltas = models.JSONField()
 
     def generar_matricula(self):
         materias = Materia.objects.filter(grado=self.aula.grado)
+        '''
         for materia in materias:
             nota_materia = NotaMateria()
             nota_materia.alumno_aula_id = self.pk
             nota_materia.notas = []
             nota_materia.materia = materia.__to_json__()
             nota_materia.save()
+        '''
 
     '''
         PREGUNTAS:
@@ -122,14 +123,21 @@ class AlumnoAula(BaseModel):
         db_table = 'AlumnoAula'
 
 
+class NotaAlumno(BaseModel):
+    alumno_aula = models.ForeignKey(AlumnoAula, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'NotaAlumno'
+
+
 # MallaAlumno
 class NotaMateria(BaseModel):
     alumno_aula = models.ForeignKey(AlumnoAula, on_delete=models.CASCADE)
     valor = models.DecimalField(decimal_places=2, max_digits=6, default=0)
     observaciones = models.TextField(null=True, blank=True)
-    materia = JSONField()
+    materia = models.JSONField()
     # materia_fk = models.ForeignKey(Materia, on_delete=models.CASCADE)
-    notas = JSONField(default={})
+    notas = models.JSONField(null=True, blank=True)
 
     '''
     

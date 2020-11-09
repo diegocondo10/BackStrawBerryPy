@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     "graphql_auth",
+    "graphql_playground",
 
     # My Apps
     'Auth.apps.AuthConfig',
@@ -85,7 +86,6 @@ GRAPHQL_JWT = {
     ],
 
 }
-
 
 GRAPHQL_AUTH = {
     'LOGIN_ALLOWED_FIELDS': ['email', 'username'],
@@ -160,7 +160,8 @@ DATABASES = {
         'PASSWORD': '74939546b162e4f9a33ca5e4be925180f12422287436cd73009a3fb8345eef22',
         'HOST': 'ec2-52-207-124-89.compute-1.amazonaws.com',
         'PORT': '5432',
-    }
+    },
+
 }
 
 # Password validation

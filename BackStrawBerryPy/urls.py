@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from graphql_jwt.decorators import jwt_cookie
+from graphql_playground.views import GraphQLPlaygroundView
 
 from BackStrawBerryPy.schema import schema
 from Personas import views
@@ -31,4 +32,5 @@ urlpatterns = [
     path('api/v1/', include(urls_api)),
     path('api/v1/mis-alumnos/<str:identificacion>', views.mis_alumnos),
     path('graphql', csrf_exempt(jwt_cookie(GraphQLView.as_view(graphiql=True, schema=schema)))),
+    path('playground', csrf_exempt(jwt_cookie(GraphQLPlaygroundView.as_view(endpoint='graphql')))),
 ]
