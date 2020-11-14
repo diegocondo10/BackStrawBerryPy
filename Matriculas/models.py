@@ -1,7 +1,7 @@
 from django.db import models
 
 from BackStrawBerryPy.models import BaseModel
-from Personas.models import Docente, Alumno
+from Personas.models import Personal, Alumno
 
 
 # Create your models here.
@@ -15,11 +15,6 @@ class PeriodoLectivo(BaseModel):
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
     responsables = models.JSONField(null=True, blank=True)
-    '''
-        PREGUNTAS:
-            - Si hay responsables por periodo lectivo y cuantos son?
-        
-    '''
 
     class Meta:
         db_table = 'PeriodoLectivo'
@@ -31,18 +26,11 @@ class Aula(BaseModel):
     # TODO: averiguar si tiene jornada
     capacidad = models.PositiveSmallIntegerField()
     grado = models.PositiveSmallIntegerField()
-    estudiantes = models.ManyToManyField(Alumno, through='AlumnoAula', blank=True)
-    docentes = models.ManyToManyField(Docente)
+    alumnos = models.ManyToManyField(Alumno, through='AlumnoAula', blank=True)
+    docentes = models.ManyToManyField(Personal)
     periodo = models.ForeignKey(PeriodoLectivo, on_delete=models.CASCADE)
     observaciones = models.TextField(null=True, blank=True)
     jornada = models.CharField(max_length=50, default='MATUTINA')
-
-    '''
-        PREGUNTAS:
-            - Tiene mas de una jornada?
-            - Cuanto docentes por aula?
-            - Los docentes dan la misma materia?
-    '''
 
     class Meta:
         db_table = 'Aula'
@@ -57,66 +45,34 @@ class Materia(BaseModel):
     objetivo = models.TextField(null=True, blank=True)
     objetivo_especifico = models.TextField(null=True, blank=True)
 
-    '''
-        PREGUNTAS:
-            - Informes que mandan al ministerior de educacion cuales? y formatos.
-                -  Malla de Alumnos?
-            
-    '''
-
     class Meta:
         db_table = 'Materia'
 
 
 # MATRICULA
 class AlumnoAula(BaseModel):
+    diagnostico_clinico = models.TextField(null=True, blank=True)
+
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    nota_final = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-    numero_faltas = models.PositiveSmallIntegerField(default=0)
-    tratamiento = models.TextField()
-    diagnostico = models.TextField()
-    matricula = models.TextField()
     numero_matricula = models.CharField(max_length=155, default='')
+    matricula = models.TextField()
     aporte_voluntario = models.DecimalField(decimal_places=2, max_digits=6)
+    tratamiento = models.TextField()
+
+    info_faltas = models.JSONField(default={
+        'total_faltas': 0,
+        'faltas': []
+    })
+
     diagnostico_final = models.TextField(null=True, blank=True)
-    faltas = models.JSONField()
 
     def generar_matricula(self):
-        materias = Materia.objects.filter(grado=self.aula.grado)
-        '''
-        for materia in materias:
-            nota_materia = NotaMateria()
-            nota_materia.alumno_aula_id = self.pk
-            nota_materia.notas = []
-            nota_materia.materia = materia.__to_json__()
-            nota_materia.save()
-        '''
+        pass
 
     '''
         PREGUNTAS:
-            - Pierden el anio?
-                - Causas de perdida de anio?
-                - Numero maximo de matriculas?
-                - Motivos para perder el anio? 
-            
-            - Calculo para nota final(de todas las materias)
-            - Maximo de numero de faltas
             - En caso de retirarce del IPCA que ocurre con la matricula?
-        
-        [
-            {
-                fecha: 2020-10-15,
-                horaInicio?: 08:00,
-                horaFin?: 10:00,
-                justificacion: "COMENTARIO DEL PADRE DE FAMILIA",
-                comentarios: "COMENTARIO DEL DOCENTE"   
-                usuario: obj             
-            }
-        ]
-            - Confirmar que la falta es por dia y no por horas.
-            
-        
     '''
 
     class Meta:

@@ -1,12 +1,8 @@
-from collections import namedtuple
-
 import graphene
-from graphene.types import unmountedtype
-from graphene.types.unmountedtype import UnmountedType
 from graphene_django import DjangoObjectType
 
 from Personas.graphql.interfaces import PadreDeFamiliaInterface
-from Personas.models import Persona, Discapacidad, Docente, Alumno
+from Personas.models import Persona, Discapacidad, Alumno, Personal
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -38,9 +34,9 @@ class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
     pass
 
 
-class DocenteType(DjangoObjectType):
+class PersonalType(DjangoObjectType):
     class Meta:
-        model = Docente
+        model = Personal
 
 
 class AlumnoType(DjangoObjectType):

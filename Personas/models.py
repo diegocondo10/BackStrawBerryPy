@@ -5,7 +5,7 @@ from BackStrawBerryPy.models import BaseModel
 
 # Create your models here.
 
-class RolPersonal(BaseModel):
+class FuncionPersonal(BaseModel):
     nombre = models.CharField()
     descripcion = models.TextField()
 
@@ -16,7 +16,6 @@ class RolPersonal(BaseModel):
 class Discapacidad(BaseModel):
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField(null=True, blank=True)
-    porcentaje = models.PositiveSmallIntegerField(null=True)
 
     class Meta:
         db_table = 'Discapacidad'
@@ -37,7 +36,7 @@ class Persona(BaseModel):
     estado_civil = models.CharField(max_length=20, null=True, blank=True)
 
     tiene_discapacidad = models.CharField(max_length=10, default="NO")
-    tipo_discapacidad = models.CharField(max_length=50, null=True, blank=True)
+    discapacidades = models.ManyToManyField(Discapacidad, blank=True)
     carnet_conadis = models.CharField(max_length=50, default='NO REGISTRA')
     porcentaje_discapacidad = models.PositiveSmallIntegerField(default=0)
 
@@ -71,29 +70,26 @@ class Persona(BaseModel):
 
 
 class Personal(BaseModel):
-    rol = models.ForeignKey(RolPersonal, on_delete=models.CASCADE)
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    funcion = models.ForeignKey(FuncionPersonal, on_delete=models.CASCADE)
     info = models.JSONField(null=True, blank=True)
+    '''
+    info:JSON
+        {
+         titulo_profesional
+            
+        }
+    '''
+    historico = models.JSONField(null=True, blank=True)
 
     class Meta:
         db_table = 'Personal'
-
-
-class Docente(BaseModel):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    # titulo = models.CharField(max_length=120) NUEVO CRUD
-    codigo = models.CharField(max_length=50, null=True, blank=True)
-    tipo_titulo = models.CharField(max_length=120)
-    titulo = models.CharField(max_length=255)
-    observaciones = models.TextField(null=True, blank=True)
 
     def full_name(self):
         return self.persona.full_name()
 
     def __str__(self):
         return self.persona.__str__()
-
-    class Meta:
-        db_table = 'Docente'
 
 
 class Alumno(BaseModel):
@@ -110,8 +106,9 @@ class Alumno(BaseModel):
     observaciones = models.TextField(null=True, blank=True)
 
     historia_clinica = models.CharField(max_length=20, null=True, blank=True)
-    diagnostico_clinico = models.TextField(null=True, blank=True)
+
     trastornos_asociados = models.TextField(null=True, blank=True)
+
     grado_dependencia = models.TextField(null=True, blank=True)
 
     bono = models.CharField(max_length=50, default="Ninguno")

@@ -1,10 +1,8 @@
 import graphene
-from graphene import InputField
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
 from Personas.graphql.inputs import PadreDeFamiliaInput
-from Personas.graphql.types import PadreDeFamiliaType
-from Personas.models import Persona, Discapacidad, Docente, Alumno
+from Personas.models import Persona, Discapacidad, Alumno, Personal
 
 
 class CreatePersonaMutation(DjangoCreateMutation):
@@ -40,19 +38,19 @@ class DeleteDiscapacidadMutation(DjangoDeleteMutation):
         model = Discapacidad
 
 
-class CreateDocenteMutation(DjangoCreateMutation):
+class CreatePersonalMutation(DjangoCreateMutation):
     class Meta:
-        model = Docente
+        model = Personal
 
 
-class UpdateDocenteMutation(DjangoUpdateMutation):
+class UpdatePersonalMutation(DjangoUpdateMutation):
     class Meta:
-        model = Docente
+        model = Personal
 
 
-class DeleteDocenteMutation(DjangoDeleteMutation):
+class DeletePersonalMutation(DjangoDeleteMutation):
     class Meta:
-        model = Docente
+        model = Personal
 
 
 class CreateAlumnoMutation(DjangoCreateMutation):

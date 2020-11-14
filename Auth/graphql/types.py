@@ -5,7 +5,6 @@ from graphene_django import DjangoObjectType
 
 from Auth.models import Aplicacion, Permiso, Grupo, Usuario
 
-Song = namedtuple('Song', ('title', 'artist'))
 
 
 class AplicacionType(DjangoObjectType):
