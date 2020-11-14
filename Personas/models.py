@@ -5,6 +5,13 @@ from BackStrawBerryPy.models import BaseModel
 
 # Create your models here.
 
+class RolPersonal(BaseModel):
+    nombre = models.CharField()
+    descripcion = models.TextField()
+
+    class Meta:
+        db_table = 'RolPersonal'
+
 
 class Discapacidad(BaseModel):
     nombre = models.CharField(max_length=255)
@@ -22,34 +29,35 @@ class Persona(BaseModel):
     segundo_nombre = models.CharField(max_length=30)
     primer_apellido = models.CharField(max_length=30)
     segundo_apellido = models.CharField(max_length=30)
-    genero = models.CharField(max_length=10, )
-    sexo = models.CharField(max_length=10)
-    # etnia = models.CharField(max_length=30, )
-    foto = models.URLField(null=True, blank=True)
-    # idioma = models.CharField(max_length=30, )
-    tipo_sangre = models.CharField(max_length=30, )
+
+    pais_nacimiento = models.CharField(max_length=30, null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
-    # ubicacion = models.CharField()
-    # nacionalidad = models.
 
-    # RECIDENCIAS
+    genero = models.CharField(max_length=10, )
+    estado_civil = models.CharField(max_length=20, null=True, blank=True)
 
-    calle_principal = models.CharField(max_length=150, null=True, blank=True)
-    calle_secundaria = models.CharField(max_length=150, null=True, blank=True)
-    lugar_referencia = models.CharField(max_length=150, null=True, blank=True)
-    numero_casa = models.CharField(max_length=30, null=True, blank=True)
-    telefono = models.CharField(max_length=20, null=True, blank=True)
-    celular = models.CharField(max_length=20, null=True, blank=True)
-    correo = models.CharField(max_length=30, null=True, blank=True)
-
-    # DISCAPACIDADES
     tiene_discapacidad = models.CharField(max_length=10, default="NO")
-    discapacidades = models.ManyToManyField(Discapacidad, blank=True)
+    tipo_discapacidad = models.CharField(max_length=50, null=True, blank=True)
     carnet_conadis = models.CharField(max_length=50, default='NO REGISTRA')
     porcentaje_discapacidad = models.PositiveSmallIntegerField(default=0)
 
-    ocupacion = models.CharField(max_length=120, null=True, blank=True)
-    nivel_formacion = models.CharField(max_length=255, null=True, blank=True)
+    etnia = models.CharField(max_length=30, )
+
+    tipo_sangre = models.CharField(max_length=30, )
+
+    pais_residencia = models.CharField(max_length=150)
+    provincia_residencia = models.CharField(max_length=150)
+    canton_residencia = models.CharField(max_length=150)
+    parroquia_residencia = models.CharField(max_length=150)
+    direccion_domiciliaria = models.TextField(null=True, blank=True)
+
+    telefono = models.CharField(max_length=20, null=True, blank=True)
+    celular_uno = models.CharField(max_length=20, null=True, blank=True)
+    celular_dos = models.CharField(max_length=20, null=True, blank=True)
+
+    correo = models.CharField(max_length=30, null=True, blank=True)
+
+    foto = models.URLField(null=True, blank=True)
     extras = models.JSONField(null=True, blank=True)
 
     def full_name(self):
@@ -60,6 +68,14 @@ class Persona(BaseModel):
 
     class Meta:
         db_table = 'Persona'
+
+
+class Personal(BaseModel):
+    rol = models.ForeignKey(RolPersonal, on_delete=models.CASCADE)
+    info = models.JSONField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'Personal'
 
 
 class Docente(BaseModel):
@@ -92,6 +108,16 @@ class Alumno(BaseModel):
     contacto_emergencia = models.JSONField(null=True, blank=True)
 
     observaciones = models.TextField(null=True, blank=True)
+
+    historia_clinica = models.CharField(max_length=20, null=True, blank=True)
+    diagnostico_clinico = models.TextField(null=True, blank=True)
+    trastornos_asociados = models.TextField(null=True, blank=True)
+    grado_dependencia = models.TextField(null=True, blank=True)
+
+    bono = models.CharField(max_length=50, default="Ninguno")
+    tipo_bono = models.CharField(max_length=50)
+    afiliacion_iess = models.CharField(max_length=10)
+    quintil_pobreza = models.CharField(max_length=10)
 
     class Meta:
         db_table = 'Alumno'
