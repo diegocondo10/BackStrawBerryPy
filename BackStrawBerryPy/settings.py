@@ -50,10 +50,11 @@ INSTALLED_APPS = [
     "graphql_playground",
 
     # My Apps
-    'Auth.apps.AuthConfig',
-    'Utils.apps.UtilsConfig',
-    'Personas.apps.PersonasConfig',
-    'Matriculas.apps.MatriculasConfig'
+    'apps.Personas.apps.PersonasConfig',
+    'apps.Auth.apps.AuthConfig',
+    'apps.Matriculas.apps.MatriculasConfig',
+    'apps.Utils.apps.UtilsConfig',
+    # 'apps.Notas.apps.NotasConfig'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -155,11 +156,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd9dg60khn12n51',
-        'USER': 'oufpqjtxjbikam',
-        'PASSWORD': '74939546b162e4f9a33ca5e4be925180f12422287436cd73009a3fb8345eef22',
-        'HOST': 'ec2-52-207-124-89.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': 'StrawBerryPyDev',
+        'USER': 'strawBerryPyDev',
+        'PASSWORD': 'strawberrypy',
+        'HOST': '204.2.63.19',
+        'PORT': '15360',
     },
 
 }

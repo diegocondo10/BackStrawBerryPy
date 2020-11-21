@@ -1,12 +1,12 @@
 import graphene
 from graphene_django.debug import DjangoDebug
 
-from Auth.graphql.queries import AuthQueries
-from Auth.schema import AuthMutations
-from Matriculas.graphql.queries import MatriculasQueries
-from Matriculas.schema import MatriculasMutations
-from Personas.graphql.queries import PersonasQueries
-from Personas.schema import PersonasMutations
+from apps.Auth.graphql.queries import AuthQueries
+from apps.Auth.schema import AuthMutations
+from apps.Matriculas.graphql.queries import MatriculasQueries
+from apps.Matriculas.schema import MatriculasMutations
+from apps.Personas.graphql.queries import PersonasQueries
+from apps.Personas.schema import PersonasMutations
 
 
 class RootQueries(

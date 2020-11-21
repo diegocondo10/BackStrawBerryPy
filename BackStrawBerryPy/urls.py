@@ -21,16 +21,16 @@ from graphql_jwt.decorators import jwt_cookie
 from graphql_playground.views import GraphQLPlaygroundView
 
 from BackStrawBerryPy.schema import schema
-from Personas import views
-
+'''
+from apps.Personas import views
 urls_api = [
-    path('auth/', include('Auth.router')),
+    path('auth/', include('apps.Auth.router')),
 ]
+'''
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('api/v1/', include(urls_api)),
-    path('api/v1/mis-alumnos/<str:identificacion>', views.mis_alumnos),
+    # path('api/v1/', include(urls_api)),
     path('graphql', csrf_exempt(jwt_cookie(GraphQLView.as_view(graphiql=True, schema=schema)))),
     path('playground', csrf_exempt(jwt_cookie(GraphQLPlaygroundView.as_view(endpoint='graphql')))),
 ]
