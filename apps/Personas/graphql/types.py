@@ -1,13 +1,19 @@
 import graphene
+from graphene.types.generic import GenericScalar
 from graphene_django import DjangoObjectType
 
 from apps.Personas.graphql.interfaces import PadreDeFamiliaInterface
-from apps.Personas.models import Persona, Discapacidad, Alumno, Personal
+from apps.Personas.models import Persona, Discapacidad, Alumno, Personal, FuncionPersonal
 
 
 class DiscapacidadType(DjangoObjectType):
     class Meta:
         model = Discapacidad
+
+
+class FuncionPersonalType(DjangoObjectType):
+    class Meta:
+        model = FuncionPersonal
 
 
 class PersonaType(DjangoObjectType):
@@ -35,8 +41,18 @@ class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
 
 
 class PersonalType(DjangoObjectType):
+    funcion_str = graphene.String()
+    info = GenericScalar()
+    persona_str = graphene.String()
+
     class Meta:
         model = Personal
+
+    def resolve_funcion_str(self: Personal, info):
+        return self.funcion.nombre
+
+    def resolve_persona_str(self: Personal, info):
+        return self.persona.__str__()
 
 
 class AlumnoType(DjangoObjectType):
@@ -44,6 +60,7 @@ class AlumnoType(DjangoObjectType):
     madre = graphene.Field(PadreDeFamiliaType)
     representante = graphene.Field(PadreDeFamiliaType)
     contacto_emergencia = graphene.Field(PadreDeFamiliaType)
+    test = GenericScalar()
 
     class Meta:
         model = Alumno

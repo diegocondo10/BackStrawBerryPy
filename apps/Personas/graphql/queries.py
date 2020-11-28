@@ -1,3 +1,5 @@
+import graphene
+
 from apps.Personas.graphql.types import *
 
 
@@ -7,14 +9,21 @@ class PersonasQueries(graphene.ObjectType):
     personas_no_docentes = graphene.List(PersonaType)
     personas_no_alumnos = graphene.List(PersonaType)
 
+    funciones_personal = graphene.List(FuncionPersonalType)
+    # funcion_persona = graphene.Field(FuncionPersonalType, id=graphene.ID(required=True))
+
     personal_all = graphene.List(PersonalType)
     personal = graphene.Field(PersonalType, id=graphene.ID(required=True))
+    personal_by_funciones = graphene.List(PersonalType, funciones=graphene.List(graphene.String, required=True))
 
     alumnos = graphene.List(AlumnoType)
     alumno = graphene.Field(AlumnoType, id=graphene.ID(required=True))
 
     discapacidades = graphene.List(DiscapacidadType)
     discapacidad = graphene.Field(DiscapacidadType, id=graphene.ID(required=True))
+
+    def resolve_funciones_personal(self, info, **kwargs):
+        return FuncionPersonal.objects.all()
 
     def resolve_personas(self, info, **kwargs):
         return Persona.objects.all().order_by("primer_apellido")
@@ -35,6 +44,9 @@ class PersonasQueries(graphene.ObjectType):
 
     def resolve_personal(self, info, id):
         return Personal.objects.filter(pk=id).first()
+
+    def resolve_personal_by_funciones(self, info, funciones):
+        return Personal.objects.filter(funcion__nombre__in=funciones)
 
     def resolve_alumnos(self, info):
         return Alumno.objects.all().order_by('persona__primer_apellido')

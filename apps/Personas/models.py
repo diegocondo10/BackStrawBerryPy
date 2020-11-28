@@ -38,23 +38,23 @@ class Persona(BaseModel):
     tiene_discapacidad = models.CharField(max_length=10, default="NO")
     discapacidades = models.ManyToManyField(Discapacidad, blank=True)
     carnet_conadis = models.CharField(max_length=50, default='NO REGISTRA')
+
     porcentaje_discapacidad = models.PositiveSmallIntegerField(default=0)
+    etnia = models.CharField(max_length=30, null=True, blank=True)
 
-    etnia = models.CharField(max_length=30, )
+    tipo_sangre = models.CharField(max_length=30, null=True, blank=True)
 
-    tipo_sangre = models.CharField(max_length=30, )
-
-    pais_residencia = models.CharField(max_length=150)
-    provincia_residencia = models.CharField(max_length=150)
-    canton_residencia = models.CharField(max_length=150)
-    parroquia_residencia = models.CharField(max_length=150)
+    pais_residencia = models.CharField(max_length=150, null=True, blank=True)
+    provincia_residencia = models.CharField(max_length=150, null=True, blank=True)
+    canton_residencia = models.CharField(max_length=150, null=True, blank=True)
+    parroquia_residencia = models.CharField(max_length=150, null=True, blank=True)
     direccion_domiciliaria = models.TextField(null=True, blank=True)
 
     telefono = models.CharField(max_length=20, null=True, blank=True)
     celular_uno = models.CharField(max_length=20, null=True, blank=True)
     celular_dos = models.CharField(max_length=20, null=True, blank=True)
-
     correo = models.CharField(max_length=30, null=True, blank=True)
+
 
     foto = models.URLField(null=True, blank=True)
     extras = models.JSONField(null=True, blank=True)
