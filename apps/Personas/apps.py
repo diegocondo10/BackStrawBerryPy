@@ -7,10 +7,10 @@ class PersonasConfig(AppConfig):
     def ready(self):
         from apps.Personas.models import FuncionPersonal
         functiones_personal_default = [
-            FuncionPersonal(nombre='DOCENTE'),
-            FuncionPersonal(nombre='SECRETARIA'),
-            FuncionPersonal(nombre='CHOFER'),
-            FuncionPersonal(nombre='TERAPEUTA'),
+            FuncionPersonal(nombre='DOCENTE', codigo='docente'),
+            FuncionPersonal(nombre='SECRETARIA', codigo='secretaria'),
+            FuncionPersonal(nombre='CHOFER', codigo='chofer'),
+            FuncionPersonal(nombre='TERAPEUTA', codigo='terapeuta'),
         ]
 
         if functiones_personal_default.__len__() != FuncionPersonal.objects.count():

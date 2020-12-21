@@ -62,6 +62,8 @@ class AlumnoType(DjangoObjectType):
     contacto_emergencia = graphene.Field(PadreDeFamiliaType)
     test = GenericScalar()
 
+    persona_str = graphene.String()
+
     class Meta:
         model = Alumno
 
@@ -73,3 +75,6 @@ class AlumnoType(DjangoObjectType):
 
     def resolve_representante(self, info):
         return self.representante
+
+    def resolve_persona_str(self: Alumno, info):
+        return self.persona.__str__()

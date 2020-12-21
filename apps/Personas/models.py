@@ -7,6 +7,7 @@ from BackStrawBerryPy.models import BaseModel
 
 class FuncionPersonal(BaseModel):
     nombre = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=50)
     descripcion = models.TextField()
 
     class Meta:
@@ -54,7 +55,6 @@ class Persona(BaseModel):
     celular_uno = models.CharField(max_length=20, null=True, blank=True)
     celular_dos = models.CharField(max_length=20, null=True, blank=True)
     correo = models.CharField(max_length=30, null=True, blank=True)
-
 
     foto = models.URLField(null=True, blank=True)
     extras = models.JSONField(null=True, blank=True)
