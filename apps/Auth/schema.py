@@ -1,13 +1,10 @@
 import graphene
 from graphql_auth import mutations
+
 from apps.Auth.graphql.mutations import *
 
 
 class AuthMutations(graphene.ObjectType):
-    create_aplicacion = CreateAplicacionMutation.Field()
-    update_aplicacion = UpdateAplicacionMutation.Field()
-    delete_aplicacion = DeleteAplicacionMutation.Field()
-
     create_permiso = CreatePermisoMutation.Field()
     update_permiso = UpdatePermisoMutation.Field()
     delete_permiso = DeletePermisoMutation.Field()

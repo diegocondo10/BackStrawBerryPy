@@ -33,18 +33,9 @@ class UserManager(BaseUserManager):
         return self._create_user(username, password, **extra_fields)
 
 
-class Aplicacion(BaseModel):
-    nombre = models.CharField(max_length=120)
-    descripcion = models.TextField(null=True, blank=True)
-
-    class Meta:
-        db_table = 'Aplicacion'
-
-
 class Permiso(BaseModel):
     nombre = models.CharField(max_length=120)
     descripcion = models.TextField(null=True, blank=True)
-    aplicacion = models.ForeignKey(Aplicacion, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Permiso'

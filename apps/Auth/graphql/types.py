@@ -1,25 +1,12 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from apps.Auth.models import Aplicacion, Permiso, Grupo, Usuario
-
-
-
-class AplicacionType(DjangoObjectType):
-    nombre = graphene.String(description='Nombre de la aplicacion')
-
-    class Meta:
-        model = Aplicacion
+from apps.Auth.models import Permiso, Grupo, Usuario
 
 
 class PermisoType(DjangoObjectType):
-    aplicacion_id = graphene.ID()
-
     class Meta:
         model = Permiso
-
-    def resolve_aplicacion_id(self: Permiso, info):
-        return self.aplicacion.id
 
 
 class GrupoType(DjangoObjectType):

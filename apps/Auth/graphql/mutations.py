@@ -1,21 +1,6 @@
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
-from apps.Auth.models import Aplicacion, Permiso, Grupo, Usuario
-
-
-class CreateAplicacionMutation(DjangoCreateMutation):
-    class Meta:
-        model = Aplicacion
-
-
-class UpdateAplicacionMutation(DjangoUpdateMutation):
-    class Meta:
-        model = Aplicacion
-
-
-class DeleteAplicacionMutation(DjangoDeleteMutation):
-    class Meta:
-        model = Aplicacion
+from apps.Auth.models import Permiso, Grupo, Usuario
 
 
 class CreatePermisoMutation(DjangoCreateMutation):
