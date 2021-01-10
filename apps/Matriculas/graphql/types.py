@@ -1,3 +1,4 @@
+import graphene
 from graphene_django import DjangoObjectType
 
 from apps.Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
@@ -19,5 +20,10 @@ class MateriaType(DjangoObjectType):
 
 
 class AlumnoAulaType(DjangoObjectType):
+    estado_matricula = graphene.String()
+
     class Meta:
         model = AlumnoAula
+
+    def resolve_estado_matricula(self: AlumnoAula, info):
+        return self.get_estado_matricula_display()
