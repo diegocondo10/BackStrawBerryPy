@@ -8,13 +8,40 @@ from apps.Personas.models import Personal, Alumno
 
 
 class PeriodoLectivo(BaseModel):
+    class EstadosPeriodo(models.IntegerChoices):
+        CERRADO = 0
+        ABIERTO = 1
+
     nombre = models.CharField(max_length=155)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
-    estado = models.CharField(max_length=30)
+    estado = models.PositiveSmallIntegerField(default=1, choices=EstadosPeriodo.choices)
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
-    responsables = models.JSONField(null=True, blank=True)
+
+    # responsables = models.JSONField(null=True, blank=True)
+
+    coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='coordinador')
+    sub_coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='sub_coordinador')
+
+    # @staticmethod
+    # def cerrar_periodo(id):
+    #     periodo: PeriodoLectivo = PeriodoLectivo.objects.filter(
+    #         pk=id,
+    #         estado=PeriodoLectivo.EstadosPeriodo.ABIERTO.value
+    #     ).first()
+    #
+    #     matriculas: QuerySet[AlumnoAula] = AlumnoAula.objects.filter(
+    #         aula__periodo__id=id,
+    #         estado_matricula=AlumnoAula.EstadosMatricula.CREADA.value
+    #     )
+    #
+    #     for matricula in matriculas:
+    #         matricula.estado_matricula = AlumnoAula.EstadosMatricula.FINALIZADA.value
+    #
+    #     AlumnoAula.objects.bulk_update(matriculas, ['estado_matricula'])
+    #
+    #     return dict(periodo=periodo, matriculas=matriculas)
 
     class Meta:
         db_table = 'PeriodoLectivos'
@@ -63,8 +90,13 @@ class AlumnoAula(BaseModel):
     matricula = models.TextField(null=True, blank=True)
     aporte_voluntario = models.DecimalField(decimal_places=2, max_digits=6)
     tratamiento = models.TextField(null=True, blank=True)
+
     total_faltas = models.PositiveSmallIntegerField(default=0)
+
     diagnostico_final = models.TextField(null=True, blank=True)
+
+    motivo_anulacion = models.TextField(null=True, blank=True)
+
     estado_matricula = models.PositiveSmallIntegerField(
         default=EstadosMatricula.CREADA.value,
         choices=EstadosMatricula.choices
@@ -123,12 +155,12 @@ class NotaMateria(BaseModel):
     # materia_fk = models.ForeignKey(Materia, on_delete=models.CASCADE)
     notas = models.JSONField(null=True, blank=True)
 
-    
+
         PREGUNTAS:
             - Formato de notas?
             - Tipos de reportes que necesitan?
             - Tienen minimos y maximo?
-            
+
         matematica:
             valorFinal: 100,
             notas:[
@@ -140,7 +172,7 @@ class NotaMateria(BaseModel):
                     usuario: objUser
                 }
             ]
-            
+
 
     class Meta:
         db_table = 'NotaMateria'

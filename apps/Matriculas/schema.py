@@ -1,12 +1,13 @@
 import graphene
 
-from apps.Matriculas.graphql.mutatios import *
+from apps.Matriculas.graphql.mutations import *
 
 
 class MatriculasMutations(graphene.ObjectType):
     create_periodo_lectivo = CreatePeriodoLectivoMutation.Field()
     update_periodo_lectivo = UpdatePeriodoLectivoMutation.Field()
     delete_periodo_lectivo = DeletePeriodoLectivoMutation.Field()
+    cerrar_periodo_lectivo = CerrarPeriodoLectivoMutation.Field()
 
     create_aula = CreateAulaMutation.Field()
     update_aula = UpdateAulaMutation.Field()

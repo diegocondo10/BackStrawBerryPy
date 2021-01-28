@@ -35,10 +35,7 @@ class MatriculasQueries(graphene.ObjectType):
     def resolve_materias(self, info, **kwargs):
         return Materia.objects.all()
 
-    # @login_required
     def resolve_matriculas(self, info, **kwargs):
-        print(info)
-        # return GraphQLError('ERROR', extensions={'test': 'prueba'})
         return AlumnoAula.objects.all()
 
     def resolve_matricula(self, info, id):

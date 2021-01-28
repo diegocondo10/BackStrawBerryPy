@@ -1,9 +1,13 @@
+import datetime
+
 import graphene
+import moment
 from graphene.types.generic import GenericScalar
 from graphene_django import DjangoObjectType
 
 from apps.Personas.graphql.interfaces import PadreDeFamiliaInterface
 from apps.Personas.models import Persona, Discapacidad, Alumno, Personal, FuncionPersonal
+from utils.functions import concat_if_exist
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -18,9 +22,13 @@ class FuncionPersonalType(DjangoObjectType):
 
 class PersonaType(DjangoObjectType):
     full_name = graphene.String(description='Nombre de la persona')
+    edad = graphene.Int()
     str = graphene.String()
     discapacidades_disponibles = graphene.List(DiscapacidadType)
-    representados = graphene.List(lambda: AlumnoType)
+    # representados = graphene.List(lambda: AlumnoType)
+
+    nombres = graphene.String()
+    apellidos = graphene.String()
 
     class Meta:
         model = Persona
@@ -35,21 +43,46 @@ class PersonaType(DjangoObjectType):
     def resolve_discapacidades_disponibles(self: Persona, info):
         return Discapacidad.objects.exclude(id__in=self.discapacidades.get_queryset().values_list('id'))
 
+    def resolve_edad(self: Persona, info):
+        now = datetime.date.today().strftime('%Y-%m-%d')
+        moment_date = moment.date(now, 'YYYY-MM-DD').subtract(
+            years=self.fecha_nacimiento.year,
+            months=self.fecha_nacimiento.month,
+            days=self.fecha_nacimiento.day
+        )
+        return moment_date.year
+
+    def resolve_nombres(self: Persona, info):
+        return self.get_nombres()
+
+    def resolve_apellidos(self: Persona, info):
+        return self.get_apellidos()
+
 
 class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
-    pass
+    nombres = graphene.String()
+    apellidos = graphene.String()
+    full_name = graphene.String()
+
+    def resolve_nombres(self: dict, info):
+        return concat_if_exist(self.get('primer_nombre'), self.get('segundo_nombre'))
+
+    def resolve_apellidos(self: dict, info):
+        return concat_if_exist(self.get('primer_apellido'), self.get('segundo_apellido'))
+
+    def resolve_full_name(self: dict, info):
+        return concat_if_exist(
+            self.get('primer_apellido'), self.get('segundo_apellido'),
+            self.get('primer_nombre'), self.get('segundo_nombre')
+        )
 
 
 class PersonalType(DjangoObjectType):
-    funcion_str = graphene.String()
     info = GenericScalar()
     persona_str = graphene.String()
 
     class Meta:
         model = Personal
-
-    def resolve_funcion_str(self: Personal, info):
-        return self.funcion.nombre
 
     def resolve_persona_str(self: Personal, info):
         return self.persona.__str__()

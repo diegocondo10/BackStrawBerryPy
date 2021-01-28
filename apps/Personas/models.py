@@ -2,8 +2,10 @@ from django.db import models
 
 from BackStrawBerryPy.models import BaseModel
 
-
 # Create your models here.
+from utils.constants.DefaultValuesModels import NO_REGISTRA
+from utils.functions import concat_if_exist
+
 
 class FuncionPersonal(BaseModel):
     nombre = models.CharField(max_length=50)
@@ -62,6 +64,12 @@ class Persona(BaseModel):
     def full_name(self):
         return f'{self.primer_nombre} {self.primer_apellido}'
 
+    def get_nombres(self):
+        return concat_if_exist(self.primer_nombre, self.segundo_nombre)
+
+    def get_apellidos(self):
+        return concat_if_exist(self.primer_nombre, self.segundo_nombre)
+
     def __str__(self):
         return f'{self.identificacion} {self.full_name()}'
 
@@ -71,8 +79,10 @@ class Persona(BaseModel):
 
 class Personal(BaseModel):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    funcion = models.ForeignKey(FuncionPersonal, on_delete=models.CASCADE)
-    info = models.JSONField(null=True, blank=True)
+    funciones = models.ManyToManyField(FuncionPersonal, blank=True)
+    titulo = models.CharField(max_length=150)
+    tipo_titulo = models.CharField(max_length=150)
+    area_de_trabajo = models.TextField(null=True, blank=True, default=NO_REGISTRA)
     '''
     info:JSON
         {
@@ -80,6 +90,7 @@ class Personal(BaseModel):
             
         }
     '''
+    meta_data = models.JSONField(null=True, blank=True)
     historico = models.JSONField(null=True, blank=True)
 
     class Meta:
