@@ -1,5 +1,7 @@
 import graphene
 import graphene_django
+from django.core.handlers.wsgi import WSGIRequest
+from graphql import ResolveInfo
 
 from apps.Auth.graphql.types import PermisoType, GrupoType, UsuarioType
 from apps.Auth.models import Permiso, Grupo, Usuario
@@ -14,6 +16,7 @@ class AuthQueries(graphene.ObjectType):
 
     usuarios = graphene_django.DjangoListField(UsuarioType)
     usuario = graphene.Field(UsuarioType, id=graphene.ID(required=True))
+    me = graphene.Field(UsuarioType)
 
     def resolve_permiso(self, info, id):
         return Permiso.objects.filter(id=id).first()
@@ -32,3 +35,10 @@ class AuthQueries(graphene.ObjectType):
 
     def resolve_usuarios(self, info):
         return Usuario.objects.all()
+
+    def resolve_me(self, info: ResolveInfo):
+        context: WSGIRequest = info.context
+        if context.user.pk:
+            return context.user
+
+        return None

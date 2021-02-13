@@ -16,7 +16,7 @@ Including another URLconf
 # from django.contrib import admin
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
-from graphene_django.views import GraphQLView
+from graphene_file_upload.django import FileUploadGraphQLView
 from graphql_jwt.decorators import jwt_cookie
 from graphql_playground.views import GraphQLPlaygroundView
 
@@ -32,6 +32,6 @@ urls_api = [
 urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('api/v1/', include(urls_api)),
-    path('graphql', csrf_exempt(jwt_cookie(GraphQLView.as_view(graphiql=True, schema=schema)))),
+    path('graphql', csrf_exempt(jwt_cookie(FileUploadGraphQLView.as_view(graphiql=True, schema=schema)))),
     path('playground', csrf_exempt(jwt_cookie(GraphQLPlaygroundView.as_view(endpoint='graphql')))),
 ]

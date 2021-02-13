@@ -52,7 +52,7 @@ class CerrarPeriodoLectivoMutation(graphene.Mutation):
 
             AlumnoAula.objects.bulk_update(matriculas, ['estado_matricula'])
 
-            return CerrarPeriodoLectivoMutation(ok=True, periodo=periodo, matriculas=matriculas)
+            return CerrarPeriodoLectivoMutation(ok=True, periodo=periodo)
 
         except PeriodoLectivo.DoesNotExist:
 

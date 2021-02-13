@@ -1,7 +1,6 @@
 from django.db import models
 
 from BackStrawBerryPy.models import BaseModel
-
 # Create your models here.
 from utils.constants.DefaultValuesModels import NO_REGISTRA
 from utils.functions import concat_if_exist
