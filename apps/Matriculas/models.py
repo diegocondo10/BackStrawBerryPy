@@ -19,29 +19,8 @@ class PeriodoLectivo(BaseModel):
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
 
-    # responsables = models.JSONField(null=True, blank=True)
-
     coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='coordinador')
     sub_coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='sub_coordinador')
-
-    # @staticmethod
-    # def cerrar_periodo(id):
-    #     periodo: PeriodoLectivo = PeriodoLectivo.objects.filter(
-    #         pk=id,
-    #         estado=PeriodoLectivo.EstadosPeriodo.ABIERTO.value
-    #     ).first()
-    #
-    #     matriculas: QuerySet[AlumnoAula] = AlumnoAula.objects.filter(
-    #         aula__periodo__id=id,
-    #         estado_matricula=AlumnoAula.EstadosMatricula.CREADA.value
-    #     )
-    #
-    #     for matricula in matriculas:
-    #         matricula.estado_matricula = AlumnoAula.EstadosMatricula.FINALIZADA.value
-    #
-    #     AlumnoAula.objects.bulk_update(matriculas, ['estado_matricula'])
-    #
-    #     return dict(periodo=periodo, matriculas=matriculas)
 
     class Meta:
         db_table = 'PeriodoLectivos'
@@ -136,44 +115,3 @@ class Falta(BaseModel):
 
     class Meta:
         db_table = 'FaltasAlumno'
-
-
-class NotaAlumno(BaseModel):
-    alumno_aula = models.ForeignKey(AlumnoAula, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'NotaAlumnos'
-
-
-# MallaAlumno
-'''
-class NotaMateria(BaseModel):
-    alumno_aula = models.ForeignKey(AlumnoAula, on_delete=models.CASCADE)
-    valor = models.DecimalField(decimal_places=2, max_digits=6, default=0)
-    observaciones = models.TextField(null=True, blank=True)
-    materia = models.JSONField()
-    # materia_fk = models.ForeignKey(Materia, on_delete=models.CASCADE)
-    notas = models.JSONField(null=True, blank=True)
-
-
-        PREGUNTAS:
-            - Formato de notas?
-            - Tipos de reportes que necesitan?
-            - Tienen minimos y maximo?
-
-        matematica:
-            valorFinal: 100,
-            notas:[
-                {
-                    titulo:'Paseo1'
-                    valor:10
-                    fechaRegistro:2020-10-12-08:00:45,
-                    descripcion:'COMENTARIOS DOCENTE',
-                    usuario: objUser
-                }
-            ]
-
-
-    class Meta:
-        db_table = 'NotaMateria'
-'''

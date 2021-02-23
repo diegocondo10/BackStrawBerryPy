@@ -3,13 +3,28 @@ from graphene_django import DjangoObjectType
 
 from apps.Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
 
-EstadosMatriculaEnum = graphene.Enum.from_enum(AlumnoAula.EstadosMatricula, description='Estado de una matricula')
+EstadosMatriculaEnum = graphene.Enum.from_enum(
+    AlumnoAula.EstadosMatricula,
+    description='Estado de una matricula'
+)
+
+EstadosPeriodoLectivoEnum = graphene.Enum.from_enum(
+    PeriodoLectivo.EstadosPeriodo,
+    description='Estados del periodo lectivo'
+)
 
 
 class PeriodoLectivoType(DjangoObjectType):
-    estado = graphene.String(show_as=graphene.String(default_value="label"))
-    matriculas = graphene.List(lambda: AlumnoAulaType, estados=graphene.List(EstadosMatriculaEnum, default_value=[]))
-    numero_matriculas = graphene.Int(estados=graphene.List(EstadosMatriculaEnum, default_value=[]))
+    estado = graphene.String(
+        show_as=graphene.String(default_value="label")
+    )
+    matriculas = graphene.List(
+        lambda: AlumnoAulaType,
+        estados=graphene.List(EstadosMatriculaEnum, default_value=[])
+    )
+    numero_matriculas = graphene.Int(
+        estados=graphene.List(EstadosMatriculaEnum, default_value=[])
+    )
     habilitar_cierre = graphene.Boolean()
 
     class Meta:

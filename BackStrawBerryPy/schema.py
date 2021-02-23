@@ -5,11 +5,12 @@ from apps.Auth.graphql.queries import AuthQueries
 from apps.Auth.schema import AuthMutations
 from apps.Matriculas.graphql.queries import MatriculasQueries
 from apps.Matriculas.schema import MatriculasMutations
+from apps.Notas.graphql.queries import NotasQueries
+from apps.Notas.schema import NotasMutations
 from apps.Personas.graphql.queries import PersonasQueries
 from apps.Personas.schema import PersonasMutations
 from apps.Utils.queries import UtilsQueries
 from apps.Utils.schema import UtilsMutations
-from apps.Utils.types import ImagenType
 
 
 class RootQueries(
@@ -18,6 +19,7 @@ class RootQueries(
     MatriculasQueries,
     # MeQuery,
     UtilsQueries,
+    NotasQueries,
     graphene.ObjectType,
 ):
     debug = graphene.Field(DjangoDebug, name='_debug')
@@ -31,6 +33,7 @@ class RootMutation(
     PersonasMutations,
     MatriculasMutations,
     UtilsMutations,
+    NotasMutations,
     graphene.ObjectType
 ):
     pass

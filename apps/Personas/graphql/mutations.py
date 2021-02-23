@@ -42,6 +42,9 @@ class CreatePersonalMutation(DjangoCreateMutation):
     class Meta:
         model = Personal
 
+    def after_mutate(cls, root, info, obj, return_data):
+        return super(CreatePersonalMutation, cls).after_mutate(root, info, obj, return_data)
+
 
 class UpdatePersonalMutation(DjangoUpdateMutation):
     class Meta:

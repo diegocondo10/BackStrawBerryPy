@@ -42,19 +42,20 @@ INSTALLED_APPS = [
     'django_cleanup',
     'corsheaders',
     'rest_framework',
-    'django_filters',
+    "django_filters",
     'storages',
     'graphene_django',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     "graphql_auth",
     "graphql_playground",
+    'webpush',
 
     # My Apps
     'apps.Personas.apps.PersonasConfig',
     'apps.Auth.apps.AuthConfig',
     'apps.Matriculas.apps.MatriculasConfig',
     'apps.Utils.apps.UtilsConfig',
-    # 'apps.Notas.apps.NotasConfig'
+    'apps.Notas.apps.NotasConfig'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
