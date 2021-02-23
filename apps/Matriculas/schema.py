@@ -1,5 +1,3 @@
-import graphene
-
 from apps.Matriculas.graphql.mutations import *
 
 
@@ -12,10 +10,6 @@ class MatriculasMutations(graphene.ObjectType):
     create_aula = CreateAulaMutation.Field()
     update_aula = UpdateAulaMutation.Field()
     delete_aula = DeleteAulaMutation.Field()
-
-    create_materia = CreateMateriaMutation.Field()
-    update_materia = UpdateMateriaMutation.Field()
-    delete_materia = DeleteMateriaMutation.Field()
 
     create_alumno_aula = CreateAlumnoAulaMutation.Field()
     update_alumno_aula = UpdateAlumnoAulaMutation.Field()

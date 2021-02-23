@@ -1,9 +1,10 @@
 from django.db import models
-# Create your models here.
-from graphene import relay
 
 from BackStrawBerryPy.models import BaseModel
 from apps.Matriculas.models import AlumnoAula
+
+
+# Create your models here.
 
 
 class Componente(BaseModel):
@@ -20,6 +21,15 @@ class NotaAlumno(BaseModel):
     titulo = models.CharField(max_length=150)
     resultado = models.CharField(max_length=150, null=True, blank=True)
     observaciones = models.TextField(null=True, blank=True)
+    evidencias = models.ManyToOneRel('EvidenciaNotaAlumno', field_name='evidencias', to='')
 
     class Meta:
         db_table = "NotasAlumno"
+
+
+class EvidenciaNotaAlumno(BaseModel):
+    url = models.URLField()
+    nota = models.ForeignKey(NotaAlumno, on_delete=models.CASCADE, related_name="evidencias", null=True)
+
+    class Meta:
+        db_table = 'EvidenciasNotasAlumno'

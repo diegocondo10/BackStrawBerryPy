@@ -72,6 +72,14 @@ class Persona(BaseModel):
     def __str__(self):
         return f'{self.identificacion} {self.full_name()}'
 
+    def get_nombres_apellidos(self):
+        return concat_if_exist(
+            self.primer_apellido,
+            self.segundo_apellido,
+            self.primer_nombre,
+            self.segundo_nombre
+        )
+
     class Meta:
         db_table = 'Personas'
 
@@ -100,6 +108,9 @@ class Personal(BaseModel):
 
     def __str__(self):
         return self.persona.__str__()
+
+    def get_funciones_str(self):
+        return ",\n".join(self.funciones.values_list('nombre', flat=True).all())
 
 
 class Alumno(BaseModel):

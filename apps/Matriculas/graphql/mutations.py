@@ -2,8 +2,8 @@ import graphene
 from django.db.models import QuerySet
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
-from apps.Matriculas.graphql.types import PeriodoLectivoType, AlumnoAulaType
-from apps.Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
+from apps.Matriculas.graphql.types import PeriodoLectivoType
+from apps.Matriculas.models import PeriodoLectivo, Aula, AlumnoAula
 from apps.common.graphql.types import ErrorType
 
 
@@ -75,21 +75,6 @@ class UpdateAulaMutation(DjangoUpdateMutation):
 class DeleteAulaMutation(DjangoDeleteMutation):
     class Meta:
         model = Aula
-
-
-class CreateMateriaMutation(DjangoCreateMutation):
-    class Meta:
-        model = Materia
-
-
-class UpdateMateriaMutation(DjangoUpdateMutation):
-    class Meta:
-        model = Materia
-
-
-class DeleteMateriaMutation(DjangoDeleteMutation):
-    class Meta:
-        model = Materia
 
 
 class CreateAlumnoAulaMutation(DjangoCreateMutation):

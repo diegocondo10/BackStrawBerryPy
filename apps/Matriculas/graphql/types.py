@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from apps.Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
+from apps.Matriculas.models import PeriodoLectivo, Aula, AlumnoAula
 
 EstadosMatriculaEnum = graphene.Enum.from_enum(
     AlumnoAula.EstadosMatricula,
@@ -58,11 +58,6 @@ class PeriodoLectivoType(DjangoObjectType):
 class AulaType(DjangoObjectType):
     class Meta:
         model = Aula
-
-
-class MateriaType(DjangoObjectType):
-    class Meta:
-        model = Materia
 
 
 class AlumnoAulaType(DjangoObjectType):

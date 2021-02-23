@@ -8,6 +8,7 @@ from apps.Matriculas.schema import MatriculasMutations
 from apps.Notas.graphql.queries import NotasQueries
 from apps.Notas.schema import NotasMutations
 from apps.Personas.graphql.queries import PersonasQueries
+from apps.Personas.reportes import reporte_nomina
 from apps.Personas.schema import PersonasMutations
 from apps.Utils.queries import UtilsQueries
 from apps.Utils.schema import UtilsMutations
@@ -23,6 +24,11 @@ class RootQueries(
     graphene.ObjectType,
 ):
     debug = graphene.Field(DjangoDebug, name='_debug')
+
+    get_reporte = graphene.String()
+
+    def resolve_get_reporte(self, info, **kwargs):
+        return reporte_nomina()
 
     class Meta:
         description = 'Consultas disponibles'

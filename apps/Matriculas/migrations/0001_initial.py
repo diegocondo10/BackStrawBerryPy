@@ -33,25 +33,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Materia',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('auth_estado', models.CharField(default='A', max_length=10)),
-                ('nombre', models.CharField(max_length=50)),
-                ('codigo', models.CharField(max_length=20)),
-                ('grado', models.PositiveSmallIntegerField()),
-                ('horas_presencial', models.PositiveSmallIntegerField()),
-                ('descripcion', models.TextField(blank=True, null=True)),
-                ('objetivo', models.TextField(blank=True, null=True)),
-                ('objetivo_especifico', models.TextField(blank=True, null=True)),
-            ],
-            options={
-                'db_table': 'Materias',
-            },
-        ),
-        migrations.CreateModel(
             name='PeriodoLectivo',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

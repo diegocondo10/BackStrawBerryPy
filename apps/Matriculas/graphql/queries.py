@@ -1,8 +1,8 @@
 import graphene
 
-from apps.Matriculas.graphql.types import PeriodoLectivoType, AulaType, MateriaType, AlumnoAulaType, \
+from apps.Matriculas.graphql.types import PeriodoLectivoType, AulaType, AlumnoAulaType, \
     EstadosPeriodoLectivoEnum
-from apps.Matriculas.models import PeriodoLectivo, Aula, Materia, AlumnoAula
+from apps.Matriculas.models import PeriodoLectivo, Aula, AlumnoAula
 
 
 class MatriculasQueries(graphene.ObjectType):
@@ -15,9 +15,6 @@ class MatriculasQueries(graphene.ObjectType):
     aulas = graphene.List(AulaType)
     aulas_periodo_abierto = graphene.List(AulaType)
     aula = graphene.Field(AulaType, id=graphene.ID(required=True))
-
-    materias = graphene.List(MateriaType)
-    materia = graphene.Field(MateriaType, id=graphene.ID(required=True))
 
     matriculas = graphene.List(AlumnoAulaType)
     matricula = graphene.Field(AlumnoAulaType, id=graphene.ID(required=True))
@@ -38,12 +35,6 @@ class MatriculasQueries(graphene.ObjectType):
 
     def resolve_aulas_periodo_abierto(self, info, **kwargs):
         return Aula.objects.filter(periodo__estado=PeriodoLectivo.EstadosPeriodo.ABIERTO)
-
-    def resolve_materia(self, info, id):
-        return Materia.objects.filter(pk=id).first()
-
-    def resolve_materias(self, info, **kwargs):
-        return Materia.objects.all()
 
     def resolve_matriculas(self, info, **kwargs):
         return AlumnoAula.objects.all()

@@ -28,8 +28,6 @@ class PeriodoLectivo(BaseModel):
 
 class Aula(BaseModel):
     nombre = models.CharField(max_length=50)
-    # numero = models.PositiveSmallIntegerField(null=True)
-    # TODO: averiguar si tiene jornada
     capacidad = models.PositiveSmallIntegerField()
     grado = models.PositiveSmallIntegerField()
     alumnos = models.ManyToManyField(Alumno, through='AlumnoAula', blank=True)
@@ -40,19 +38,6 @@ class Aula(BaseModel):
 
     class Meta:
         db_table = 'Aulas'
-
-
-class Materia(BaseModel):
-    nombre = models.CharField(max_length=50)
-    codigo = models.CharField(max_length=20)
-    grado = models.PositiveSmallIntegerField()
-    horas_presencial = models.PositiveSmallIntegerField()
-    descripcion = models.TextField(null=True, blank=True)
-    objetivo = models.TextField(null=True, blank=True)
-    objetivo_especifico = models.TextField(null=True, blank=True)
-
-    class Meta:
-        db_table = 'Materias'
 
 
 # MATRICULA
@@ -97,11 +82,6 @@ class AlumnoAula(BaseModel):
             self.save()
 
         return matricula
-
-    '''
-        PREGUNTAS:
-            - En caso de retirarce del IPCA que ocurre con la matricula?
-    '''
 
     class Meta:
         db_table = 'AlumnoAulas'

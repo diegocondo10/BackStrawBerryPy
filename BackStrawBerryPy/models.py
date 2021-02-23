@@ -1,8 +1,9 @@
 from django.db import models
-from django.utils import dateparse
 
 
 class BaseModel(models.Model):
+    ACTIVO = "A"
+    ELIMINADO = "E"
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     auth_estado = models.CharField(max_length=10, default='A')
