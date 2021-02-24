@@ -3,7 +3,7 @@ from django.http import FileResponse
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 
-from apps.Personas.reportes import reporte_nomina, reporte_notas
+from apps.Personas.reportes import reporte_nomina, reporte_notas, reporte_ficha_inscripcion
 
 
 @api_view(['POST', 'GET'])
@@ -27,6 +27,20 @@ def get_reporte_notas(request: Request):
         area_trabajo=data.get('area_trabajo'),
         responsable=data.get('responsable'),
     )
+    return FileResponse(
+        file,
+        as_attachment=True,
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        filename='test.docx'
+    )
+
+
+@api_view(['POST', 'GET'])
+def get_reporte_matricula(request: Request):
+    file = reporte_ficha_inscripcion(
+        id_matricula=request.data.get('id_matricula')
+    )
+
     return FileResponse(
         file,
         as_attachment=True,

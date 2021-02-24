@@ -67,7 +67,7 @@ class Persona(BaseModel):
         return concat_if_exist(self.primer_nombre, self.segundo_nombre)
 
     def get_apellidos(self):
-        return concat_if_exist(self.primer_nombre, self.segundo_nombre)
+        return concat_if_exist(self.primer_apellido, self.segundo_apellido)
 
     def __str__(self):
         return f'{self.identificacion} {self.full_name()}'

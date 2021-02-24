@@ -11,6 +11,7 @@ from apps.Personas import views
 urls_reportes = [
     path('api/v1/reporte-nomina', views.get_reporte_nomina),
     path('api/v1/reporte-notas', views.get_reporte_notas),
+    path('api/v1/reporte-matricula', views.get_reporte_matricula),
 ]
 
 urlpatterns = [

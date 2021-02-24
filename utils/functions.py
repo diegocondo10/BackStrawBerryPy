@@ -1,4 +1,5 @@
 import io
+from datetime import date
 
 from docxtpl import DocxTemplate
 
@@ -14,7 +15,7 @@ def create_docx(file, context) -> DocxTemplate:
     return tpl
 
 
-def crete_docx_bytes(file, context) -> io.BytesIO:
+def create_docx_bytes(file, context) -> io.BytesIO:
     docx = create_docx(file, context)
     file_stream = io.BytesIO()
     docx.save(file_stream)
@@ -29,5 +30,6 @@ def docx_to_bytes(tpl):
     return file_stream
 
 
-def get_mes_str():
-    return
+def get_edad(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))

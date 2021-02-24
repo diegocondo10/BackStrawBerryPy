@@ -13,7 +13,7 @@ from BackStrawBerryPy.settings import BASE_DIR
 from apps.Matriculas.models import AlumnoAula
 from apps.Notas.models import NotaAlumno, EvidenciaNotaAlumno
 from apps.Personas.models import Personal
-from utils.functions import create_docx, docx_to_bytes
+from utils.functions import create_docx, docx_to_bytes, create_docx_bytes, get_edad
 
 DIR_REPORTES = os.path.join(BASE_DIR, 'static', 'reportes')
 
@@ -88,3 +88,29 @@ def reporte_notas(id_matricula, id_docente, area_trabajo, responsable):
         ],
     }, **imgs_objs})
     return docx_to_bytes(tpl)
+
+
+def reporte_ficha_inscripcion(id_matricula):
+    matricula = AlumnoAula.objects \
+        .select_related('alumno__persona', 'aula') \
+        .get(pk=id_matricula)
+
+    persona = matricula.alumno.persona
+    aula = matricula.aula
+    return create_docx_bytes(
+        file=get_reporte("FichaInscripcion.docx"),
+        context={
+            'apellidos': persona.get_apellidos(),
+            'nombres': persona.get_nombres(),
+            'lugar': persona.direccion_domiciliaria,
+            'fecha_n': persona.fecha_nacimiento.strftime('%d/%m/%Y'),
+            'edad': get_edad(persona.fecha_nacimiento),
+            'cedula': persona.identificacion,
+            'conadis': persona.carnet_conadis,
+            'nivel_a': aula.grado,
+            'promovido': aula.grado,
+            'tratamiento': matricula.tratamiento,
+            'diagnostico': matricula.diagnostico_clinico
+
+        }
+    )
