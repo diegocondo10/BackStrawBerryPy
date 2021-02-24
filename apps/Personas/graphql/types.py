@@ -91,8 +91,8 @@ class PersonalType(DjangoObjectType):
 class AlumnoType(DjangoObjectType):
     padre = graphene.Field(PadreDeFamiliaType)
     madre = graphene.Field(PadreDeFamiliaType)
-    representante = graphene.Field(PadreDeFamiliaType)
-    contacto_emergencia = graphene.Field(PadreDeFamiliaType)
+    representante = GenericScalar()
+    contacto_emergencia = GenericScalar()
     test = GenericScalar()
 
     persona_str = graphene.String()
@@ -108,6 +108,9 @@ class AlumnoType(DjangoObjectType):
 
     def resolve_representante(self, info):
         return self.representante
+
+    def resolve_contacto_emergencia(self, info):
+        return self.contacto_emergencia
 
     def resolve_persona_str(self: Alumno, info):
         return self.persona.__str__()

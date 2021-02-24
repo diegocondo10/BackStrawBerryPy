@@ -1,4 +1,5 @@
 import graphene
+from graphene.types.generic import GenericScalar
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
 from apps.Auth.models import Usuario
@@ -70,8 +71,6 @@ class CreateAlumnoMutation(DjangoCreateMutation):
         field_types = {
             "padre": graphene.Field(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
-            "representante": graphene.InputField(PadreDeFamiliaInput),
-            "contacto_emergencia": graphene.InputField(PadreDeFamiliaInput),
         }
 
 
@@ -81,8 +80,7 @@ class UpdateAlumnoMutation(DjangoUpdateMutation):
         field_types = {
             "padre": graphene.InputField(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
-            "representante": graphene.InputField(PadreDeFamiliaInput),
-            "contacto_emergencia": graphene.InputField(PadreDeFamiliaInput),
+
         }
 
 

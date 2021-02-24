@@ -51,6 +51,7 @@ class Persona(BaseModel):
     canton_residencia = models.CharField(max_length=150, null=True, blank=True)
     parroquia_residencia = models.CharField(max_length=150, null=True, blank=True)
     direccion_domiciliaria = models.TextField(null=True, blank=True)
+    sector = models.TextField(null=True, blank=True)
 
     telefono = models.CharField(max_length=20, null=True, blank=True)
     celular_uno = models.CharField(max_length=20, null=True, blank=True)
