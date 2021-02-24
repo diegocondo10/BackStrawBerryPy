@@ -7,6 +7,7 @@ from docxtpl import InlineImage, DocxTemplate
 
 from BackStrawBerryPy.models import BaseModel
 from BackStrawBerryPy.settings import BASE_DIR
+from apps.Matriculas.models import AlumnoAula
 from apps.Notas.models import NotaAlumno, EvidenciaNotaAlumno
 from apps.Personas.models import Personal
 from utils.functions import create_docx, docx_to_bytes
@@ -45,6 +46,8 @@ def reporte_nomina():
 
 
 def reporte_notas(id_matricula):
+    matricula = AlumnoAula.objects.get(pk=id_matricula)
+
     notas = NotaAlumno.objects.prefetch_related("evidencias").filter(
         alumno_aula_id=id_matricula,
         auth_estado=BaseModel.ACTIVO
@@ -60,15 +63,15 @@ def reporte_notas(id_matricula):
     for index, img in enumerate(list(imgs)):
         response = requests.get(img, stream=True)
         image = io.BytesIO(response.content)
-        my_image = InlineImage(tpl, image, width=Mm(100))
+        my_image = InlineImage(tpl, image, width=Mm(150))
         imgs_objs.__setitem__(f'img{index + 1}', my_image)
-
-    items = {
+    print(matricula.aula.docentes)
+    tpl.render({**{
         'responsable': 'PRUEBA',
-        'area_de_trabajo': 'PRUEBA2',
-        'docente': 'PRUEBA3',
-        'coordinador': 'PRUEBA4',
-        'director': 'PRUEBA5',
+        # 'area_de_trabajo': matricula.aula.docentes[0].area_de_trabajo,
+        # 'docente': matricula.aula.docentes[0].persona.__str__(),
+        'coordinador': matricula.aula.periodo.coordinador.persona.__str__(),
+        'director': matricula.aula.periodo.director.persona.__str__(),
         'notas': [
             dict(
                 index=i + 1,
@@ -79,6 +82,5 @@ def reporte_notas(id_matricula):
             )
             for i, item in enumerate(notas)
         ],
-    }
-    tpl.render({**items, **imgs_objs})
+    }, **imgs_objs})
     return docx_to_bytes(tpl)

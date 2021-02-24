@@ -1,6 +1,7 @@
 import graphene
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
+from apps.Auth.models import Usuario
 from apps.Personas.graphql.inputs import PadreDeFamiliaInput
 from apps.Personas.models import Persona, Discapacidad, Alumno, Personal
 
@@ -42,8 +43,15 @@ class CreatePersonalMutation(DjangoCreateMutation):
     class Meta:
         model = Personal
 
+    @classmethod
     def after_mutate(cls, root, info, obj, return_data):
-        return super(CreatePersonalMutation, cls).after_mutate(root, info, obj, return_data)
+        persona = obj.persona
+        Usuario.objects.create_user(
+            username=persona.identificacion,
+            password='1234ABC',
+            persona_id=persona.pk
+        )
+        return super().after_mutate(root, info, obj, return_data)
 
 
 class UpdatePersonalMutation(DjangoUpdateMutation):

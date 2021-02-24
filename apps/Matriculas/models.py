@@ -19,8 +19,9 @@ class PeriodoLectivo(BaseModel):
     fecha_fin_clases = models.DateField()
     observaciones = models.TextField(null=True, blank=True)
 
-    coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='coordinador')
-    sub_coordinador = models.ForeignKey(Personal, on_delete=models.CASCADE, related_name='sub_coordinador')
+    coordinador = models.ForeignKey(Personal, on_delete=models.RESTRICT, related_name='coordinador', null=True)
+    sub_coordinador = models.ForeignKey(Personal, on_delete=models.RESTRICT, related_name='sub_coordinador', null=True)
+    director = models.ForeignKey(Personal, on_delete=models.RESTRICT, related_name='director', null=True)
 
     class Meta:
         db_table = 'PeriodoLectivos'
