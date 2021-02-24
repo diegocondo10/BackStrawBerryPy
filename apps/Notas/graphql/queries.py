@@ -14,7 +14,9 @@ class NotasQueries(graphene.ObjectType):
     notas_alumno = DjangoListField(NotaAlumnoType, id_alumo=graphene.ID(required=True))
 
     def resolve_notas_alumno(self, info, id_alumo):
-        return NotaAlumno.objects.filter(alumno_aula__id=id_alumo, auth_estado=BaseModel.ACTIVO)
+        return NotaAlumno.objects \
+            .filter(alumno_aula__id=id_alumo, auth_estado=BaseModel.ACTIVO) \
+            .order_by('componente__nombre')
 
     def resolve_notas_alumnos(self, info):
         return NotaAlumno.objects.filter(auth_estado=BaseModel.ACTIVO)

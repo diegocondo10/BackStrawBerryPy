@@ -1,4 +1,5 @@
 import graphene
+import graphene_django_optimizer as gql_optimizer
 
 from apps.Matriculas.graphql.types import PeriodoLectivoType, AulaType, AlumnoAulaType, \
     EstadosPeriodoLectivoEnum
@@ -20,12 +21,12 @@ class MatriculasQueries(graphene.ObjectType):
     matricula = graphene.Field(AlumnoAulaType, id=graphene.ID(required=True))
 
     def resolve_periodo_lectivo(self, info, id):
-        return PeriodoLectivo.objects.filter(pk=id).first()
+        return gql_optimizer.query(PeriodoLectivo.objects.filter(pk=id).first(), info)
 
     def resolve_periodos_lectivos(self, info, estados: list):
         if estados.__len__() == 0:
-            return PeriodoLectivo.objects.all()
-        return PeriodoLectivo.objects.filter(estado__in=estados)
+            return gql_optimizer.query(PeriodoLectivo.objects.all(), info)
+        return gql_optimizer.query(PeriodoLectivo.objects.filter(estado__in=estados), info)
 
     def resolve_aula(self, info, id):
         return Aula.objects.filter(pk=id).first()

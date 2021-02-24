@@ -27,3 +27,7 @@ def docx_to_bytes(tpl):
     tpl.save(file_stream)
     file_stream.seek(0)
     return file_stream
+
+
+def get_mes_str():
+    return

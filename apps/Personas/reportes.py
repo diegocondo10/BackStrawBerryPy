@@ -1,7 +1,10 @@
+import calendar
 import io
 import os
+from datetime import date
 
 import requests
+from django.utils.translation import gettext as _
 from docx.shared import Mm
 from docxtpl import InlineImage, DocxTemplate
 
@@ -45,13 +48,13 @@ def reporte_nomina():
     return file_stream
 
 
-def reporte_notas(id_matricula):
+def reporte_notas(id_matricula, id_docente, area_trabajo, responsable):
     matricula = AlumnoAula.objects.get(pk=id_matricula)
 
     notas = NotaAlumno.objects.prefetch_related("evidencias").filter(
         alumno_aula_id=id_matricula,
         auth_estado=BaseModel.ACTIVO
-    )
+    ).order_by('componente__nombre')
 
     imgs = EvidenciaNotaAlumno.objects.filter(
         nota_id__in=[nota.pk for nota in notas]
@@ -65,11 +68,12 @@ def reporte_notas(id_matricula):
         image = io.BytesIO(response.content)
         my_image = InlineImage(tpl, image, width=Mm(150))
         imgs_objs.__setitem__(f'img{index + 1}', my_image)
-    print(matricula.aula.docentes)
+
     tpl.render({**{
-        'responsable': 'PRUEBA',
-        # 'area_de_trabajo': matricula.aula.docentes[0].area_de_trabajo,
-        # 'docente': matricula.aula.docentes[0].persona.__str__(),
+        'responsable': responsable,
+        'mes': _(calendar.month_name[date.today().month]).upper(),
+        'area_de_trabajo': area_trabajo,
+        'docente': Personal.objects.select_related('persona').get(pk=id_docente).persona.__str__(),
         'coordinador': matricula.aula.periodo.coordinador.persona.__str__(),
         'director': matricula.aula.periodo.director.persona.__str__(),
         'notas': [
