@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="StrawBerryPy" type="Python.DjangoServer" factoryName="Django server">
+  <configuration name="StrawBerryPy" type="Python.DjangoServer" factoryName="Django server">
     <module name="BackStrawBerryPy" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
