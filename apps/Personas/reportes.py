@@ -101,6 +101,7 @@ def reporte_ficha_inscripcion(id_matricula):
     return create_docx_bytes(
         file=get_reporte("FichaInscripcion.docx"),
         context={
+            'anio': date.today().year,
             'apellidos': persona.get_apellidos(),
             'nombres': persona.get_nombres(),
             'lugar': persona.direccion_domiciliaria,
@@ -112,6 +113,31 @@ def reporte_ficha_inscripcion(id_matricula):
             'promovido': aula.grado,
             'tratamiento': matricula.tratamiento,
             'diagnostico': matricula.diagnostico_clinico,
-            'apellidos_p': concat_if_exist(alumo.padre.get('primer_apellido'), alumo.padre.get('segundo_apellido'))
+            # INFORMACION DEL PADRE
+            'apellidos_p': concat_if_exist(alumo.padre.get('primer_apellido'), alumo.padre.get('segundo_apellido')),
+            'nombres_p': concat_if_exist(alumo.padre.get('primer_nombre'), alumo.padre.get('segundo_nombre')),
+            'cedula_p': alumo.padre.get('identificacion'),
+            'ocupacion_p': alumo.padre.get('ocupacion'),
+            'direccion_p': alumo.padre.get('direccion'),
+            'telefono_p': alumo.padre.get('telefono'),
+            'celular_p': alumo.padre.get('celular'),
+            # INFORMACION DE LA MADRE
+            'apellidos_m': concat_if_exist(alumo.madre.get('primer_apellido'), alumo.madre.get('segundo_apellido')),
+            'nombres_m': concat_if_exist(alumo.madre.get('primer_apellido'), alumo.madre.get('segundo_apellido')),
+            'cedula_m': alumo.madre.get('identificacion'),
+            'ocupacion_m': alumo.madre.get('ocupacion'),
+            'direccion_m': alumo.madre.get('direccion'),
+            'telefono_m': alumo.madre.get('telefono'),
+            'celular_m': alumo.madre.get('celular'),
+            'correo': persona.correo,
+            'direccion': persona.direccion_domiciliaria,
+            'provincia': persona.provincia_residencia,
+            'canton': persona.canton_residencia,
+            'parroquia': persona.parroquia_residencia,
+            'sector': persona.direccion_domiciliaria,  # TODO: agregar campo en form
+            # MATRICULA
+            'matricula': matricula.numero_matricula,
+            'aporte': f"${matricula.aporte_voluntario}",
+            'fecha_inscripcion': matricula.created_at.strftime('%d/%m/%Y')
         }
     )
