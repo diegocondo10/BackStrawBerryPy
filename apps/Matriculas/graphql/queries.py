@@ -38,7 +38,11 @@ class MatriculasQueries(graphene.ObjectType):
         return Aula.objects.filter(periodo__estado=PeriodoLectivo.EstadosPeriodo.ABIERTO)
 
     def resolve_matriculas(self, info, **kwargs):
-        return AlumnoAula.objects.all()
+        return AlumnoAula.objects.all().order_by(
+            'aula__periodo__nombre', 'aula__nombre',
+            'aula__periodo__nombre',
+            'alumno__persona__identificacion'
+        )
 
     def resolve_matricula(self, info, id):
         return AlumnoAula.objects.filter(pk=id).first()
