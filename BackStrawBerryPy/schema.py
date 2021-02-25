@@ -25,11 +25,6 @@ class RootQueries(
 ):
     debug = graphene.Field(DjangoDebug, name='_debug')
 
-    get_reporte = graphene.String()
-
-    def resolve_get_reporte(self, info, **kwargs):
-        return reporte_nomina()
-
     class Meta:
         description = 'Consultas disponibles'
 

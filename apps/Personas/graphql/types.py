@@ -63,6 +63,7 @@ class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
     nombres = graphene.String()
     apellidos = graphene.String()
     full_name = graphene.String()
+    str = graphene.String()
 
     def resolve_nombres(self: dict, info):
         return concat_if_exist(self.get('primer_nombre'), self.get('segundo_nombre'))
@@ -72,6 +73,13 @@ class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
 
     def resolve_full_name(self: dict, info):
         return concat_if_exist(
+            self.get('primer_apellido'), self.get('segundo_apellido'),
+            self.get('primer_nombre'), self.get('segundo_nombre')
+        )
+
+    def resolve_str(self: dict, info):
+        return concat_if_exist(
+            self.get('identificacion'),
             self.get('primer_apellido'), self.get('segundo_apellido'),
             self.get('primer_nombre'), self.get('segundo_nombre')
         )

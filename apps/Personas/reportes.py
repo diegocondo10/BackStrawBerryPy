@@ -13,7 +13,7 @@ from BackStrawBerryPy.settings import BASE_DIR
 from apps.Matriculas.models import AlumnoAula
 from apps.Notas.models import NotaAlumno, EvidenciaNotaAlumno
 from apps.Personas.models import Personal
-from utils.functions import create_docx, docx_to_bytes, create_docx_bytes, get_edad, concat_if_exist
+from utils.functions import create_docx, docx_to_bytes, create_docx_bytes, get_edad, concat_if_exist, get_ordinal_num
 
 DIR_REPORTES = os.path.join(BASE_DIR, 'static', 'reportes')
 
@@ -97,7 +97,8 @@ def reporte_ficha_inscripcion(id_matricula):
 
     persona = matricula.alumno.persona
     aula = matricula.aula
-    alumo = matricula.alumno
+    alumno = matricula.alumno
+
     return create_docx_bytes(
         file=get_reporte("FichaInscripcion.docx"),
         context={
@@ -109,32 +110,36 @@ def reporte_ficha_inscripcion(id_matricula):
             'edad': get_edad(persona.fecha_nacimiento),
             'cedula': persona.identificacion,
             'conadis': persona.carnet_conadis,
-            'nivel_a': aula.grado,
-            'promovido': aula.grado,
+            'nivel_a': _(get_ordinal_num(aula.grado)),
+            'promovido': _(get_ordinal_num(aula.grado)),
             'tratamiento': matricula.tratamiento,
             'diagnostico': matricula.diagnostico_clinico,
             # INFORMACION DEL PADRE
-            'apellidos_p': concat_if_exist(alumo.padre.get('primer_apellido'), alumo.padre.get('segundo_apellido')),
-            'nombres_p': concat_if_exist(alumo.padre.get('primer_nombre'), alumo.padre.get('segundo_nombre')),
-            'cedula_p': alumo.padre.get('identificacion'),
-            'ocupacion_p': alumo.padre.get('ocupacion'),
-            'direccion_p': alumo.padre.get('direccion'),
-            'telefono_p': alumo.padre.get('telefono'),
-            'celular_p': alumo.padre.get('celular'),
+            'apellidos_p': concat_if_exist(alumno.padre.get('primer_apellido'), alumno.padre.get('segundo_apellido')),
+            'nombres_p': concat_if_exist(alumno.padre.get('primer_nombre'), alumno.padre.get('segundo_nombre')),
+            'cedula_p': alumno.padre.get('identificacion'),
+            'ocupacion_p': alumno.padre.get('ocupacion'),
+            'direccion_p': alumno.padre.get('direccion'),
+            'telefono_p': alumno.padre.get('telefono'),
+            'celular_p': alumno.padre.get('celular'),
             # INFORMACION DE LA MADRE
-            'apellidos_m': concat_if_exist(alumo.madre.get('primer_apellido'), alumo.madre.get('segundo_apellido')),
-            'nombres_m': concat_if_exist(alumo.madre.get('primer_apellido'), alumo.madre.get('segundo_apellido')),
-            'cedula_m': alumo.madre.get('identificacion'),
-            'ocupacion_m': alumo.madre.get('ocupacion'),
-            'direccion_m': alumo.madre.get('direccion'),
-            'telefono_m': alumo.madre.get('telefono'),
-            'celular_m': alumo.madre.get('celular'),
+            'apellidos_m': concat_if_exist(alumno.madre.get('primer_apellido'), alumno.madre.get('segundo_apellido')),
+            'nombres_m': concat_if_exist(alumno.madre.get('primer_nombre'), alumno.madre.get('segundo_nombre')),
+            'cedula_m': alumno.madre.get('identificacion'),
+            'ocupacion_m': alumno.madre.get('ocupacion'),
+            'direccion_m': alumno.madre.get('direccion'),
+            'telefono_m': alumno.madre.get('telefono'),
+            'celular_m': alumno.madre.get('celular'),
             'correo': persona.correo,
             'direccion': persona.direccion_domiciliaria,
             'provincia': persona.provincia_residencia,
             'canton': persona.canton_residencia,
             'parroquia': persona.parroquia_residencia,
-            'sector': persona.direccion_domiciliaria,  # TODO: agregar campo en form
+            'sector': persona.sector,
+            # CONTACTO_EMERGENCIA
+            'nombre_emergencia': alumno.contacto_emergencia.get('nombres'),
+            'contacto': alumno.contacto_emergencia.get('contacto'),
+            'nombre_representante': alumno.representante.get('nombres'),
             # MATRICULA
             'matricula': matricula.numero_matricula,
             'aporte': f"${matricula.aporte_voluntario}",
