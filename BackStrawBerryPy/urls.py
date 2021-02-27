@@ -1,4 +1,4 @@
-# from django.contrib import admin
+from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from graphene_file_upload.django import FileUploadGraphQLView
@@ -15,7 +15,7 @@ urls_reportes = [
 ]
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # path('api/v1/', include(urls_api)),
     path('webpush/', include('webpush.urls')),
     path('graphql', csrf_exempt(jwt_cookie(FileUploadGraphQLView.as_view(graphiql=True, schema=schema)))),
