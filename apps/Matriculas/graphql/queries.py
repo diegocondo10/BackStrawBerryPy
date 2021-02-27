@@ -21,7 +21,7 @@ class MatriculasQueries(graphene.ObjectType):
     matricula = graphene.Field(AlumnoAulaType, id=graphene.ID(required=True))
 
     def resolve_periodo_lectivo(self, info, id):
-        return gql_optimizer.query(PeriodoLectivo.objects.filter(pk=id).first(), info)
+        return PeriodoLectivo.objects.filter(pk=id).first()
 
     def resolve_periodos_lectivos(self, info, estados: list):
         if estados.__len__() == 0:
