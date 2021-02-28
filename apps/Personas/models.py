@@ -81,6 +81,11 @@ class Persona(BaseModel):
             self.segundo_nombre
         )
 
+    def get_edad(self):
+        today = self.fecha_nacimiento.today()
+        born = self.fecha_nacimiento
+        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
     class Meta:
         db_table = 'Personas'
 
@@ -140,3 +145,14 @@ class Alumno(BaseModel):
 
     class Meta:
         db_table = 'Alumnos'
+
+    def map_padres(self, padre="padre"):
+        selected: dict = self.__dict__.get(padre)
+        apellidos_nombres = concat_if_exist(
+            selected.get('primer_apellido', ""),
+            selected.get('segundo_apellido', ""),
+            selected.get('primer_nombre', ""),
+            selected.get('segundo_nomre', ""),
+        )
+        selected['apellidos_nombres'] = apellidos_nombres
+        return selected

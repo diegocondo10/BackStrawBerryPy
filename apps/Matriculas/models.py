@@ -62,6 +62,11 @@ class AlumnoAula(BaseModel):
 
     motivo_anulacion = models.TextField(null=True, blank=True)
 
+    amie = models.TextField(blank=True, null=True)
+    mies = models.TextField(blank=True, null=True)
+    grado_dependencia = models.TextField(blank=True, null=True)
+    tipo_familia = models.TextField(blank=True, null=True)
+
     estado_matricula = models.PositiveSmallIntegerField(
         default=EstadosMatricula.CREADA.value,
         choices=EstadosMatricula.choices
