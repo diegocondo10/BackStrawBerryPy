@@ -234,7 +234,7 @@ def reporte_general_total_alumnos(id_periodo):
         set_column(context, "DIAGNOSTICO CLINICO", matricula.diagnostico_clinico)
         set_column(context, "TRASTORNOS ASOCIADOS", alumno.trastornos_asociados)
         set_column(context, "GRADO DE DEPENDENCIA", matricula.grado_dependencia)
-        set_column(context, "REPRESENTANTE", alumno.representante.get("parentesco", ""))  # TODO: mapp this value
+        set_column(context, "REPRESENTANTE", alumno.representante.get("parentesco", ""))
         set_column(context, "NOMBRE PADRE", alumno.map_padres().get('apellidos_nombres'))
         set_column(context, "CI PADRE", alumno.padre.get('identificacion'))
         set_column(context, "NOMBRE MADRE", alumno.map_padres("madre").get("apellidos_nombres"))

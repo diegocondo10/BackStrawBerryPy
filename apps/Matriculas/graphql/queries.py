@@ -1,6 +1,7 @@
 import graphene
 import graphene_django_optimizer as gql_optimizer
 
+from BackStrawBerryPy.models import BaseModel
 from apps.Matriculas.graphql.types import PeriodoLectivoType, AulaType, AlumnoAulaType, \
     EstadosPeriodoLectivoEnum
 from apps.Matriculas.models import PeriodoLectivo, Aula, AlumnoAula
@@ -25,22 +26,34 @@ class MatriculasQueries(graphene.ObjectType):
 
     def resolve_periodos_lectivos(self, info, estados: list):
         if estados.__len__() == 0:
-            return gql_optimizer.query(PeriodoLectivo.objects.all(), info)
-        return gql_optimizer.query(PeriodoLectivo.objects.filter(estado__in=estados), info)
+            return gql_optimizer.query(PeriodoLectivo.objects.filter(auth_estado=BaseModel.ACTIVO), info)
+        return gql_optimizer.query(
+            PeriodoLectivo.objects.filter(estado__in=estados, auth_estado=BaseModel.ACTIVO),
+            info
+        )
 
     def resolve_aula(self, info, id):
-        return Aula.objects.filter(pk=id).first()
+        return gql_optimizer.query(Aula.objects.filter(pk=id).first(), info)
 
     def resolve_aulas(self, info, **kwargs):
-        return Aula.objects.all()
+        return gql_optimizer.query(
+            Aula.objects.filter(periodo__auth_estado=BaseModel.ACTIVO),
+            info
+        )
 
     def resolve_aulas_periodo_abierto(self, info, **kwargs):
-        return Aula.objects.filter(periodo__estado=PeriodoLectivo.EstadosPeriodo.ABIERTO)
+        return gql_optimizer.query(
+            Aula.objects.filter(
+                periodo__estado=PeriodoLectivo.EstadosPeriodo.ABIERTO,
+                periodo__auth_estado=BaseModel.ACTIVO
+            ),
+            info
+        )
 
     def resolve_matriculas(self, info, **kwargs):
-        return AlumnoAula.objects.all().order_by(
-            'aula__periodo__nombre', 'aula__nombre',
+        return AlumnoAula.objects.filter(auth_estado=BaseModel.ACTIVO).order_by(
             'aula__periodo__nombre',
+            'aula__nombre',
             'alumno__persona__identificacion'
         )
 

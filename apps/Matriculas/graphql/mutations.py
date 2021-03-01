@@ -15,6 +15,7 @@ class CreatePeriodoLectivoMutation(DjangoCreateMutation):
 class UpdatePeriodoLectivoMutation(DjangoUpdateMutation):
     class Meta:
         model = PeriodoLectivo
+        optional_fields = ('nombre', 'fecha_inicio', 'fecha_fin', 'fecha_fin_clases',)
 
 
 class DeletePeriodoLectivoMutation(DjangoDeleteMutation):
