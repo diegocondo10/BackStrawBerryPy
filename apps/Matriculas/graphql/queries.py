@@ -33,7 +33,7 @@ class MatriculasQueries(graphene.ObjectType):
         )
 
     def resolve_aula(self, info, id):
-        return gql_optimizer.query(Aula.objects.filter(pk=id).first(), info)
+        return Aula.objects.filter(pk=id).first()
 
     def resolve_aulas(self, info, **kwargs):
         return gql_optimizer.query(
