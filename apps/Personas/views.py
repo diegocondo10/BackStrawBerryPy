@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import FileResponse
+from django.http import FileResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 
@@ -53,6 +53,7 @@ def get_reporte_matricula(request: Request):
 @api_view(['POST', 'GET'])
 def get_reporte_general_total_alumnos(request: Request):
     data: dict = request.data
+
     file = reporte_general_total_alumnos(data.get('id'))
     return FileResponse(
         file,
