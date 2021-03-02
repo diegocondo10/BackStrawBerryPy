@@ -45,12 +45,15 @@ class CreatePersonalMutation(DjangoCreateMutation):
 
     @classmethod
     def after_mutate(cls, root, info, obj, return_data):
-        persona = obj.persona
-        Usuario.objects.create_user(
-            username=persona.identificacion,
-            password=persona.identificacion,
-            persona_id=persona.pk
-        )
+        try:
+            persona = obj.persona
+            Usuario.objects.create_user(
+                username=persona.identificacion,
+                password=persona.identificacion,
+                persona_id=persona.pk
+            )
+        except:
+            pass
         return super().after_mutate(root, info, obj, return_data)
 
 
@@ -74,12 +77,15 @@ class CreateAlumnoMutation(DjangoCreateMutation):
 
     @classmethod
     def after_mutate(cls, root, info, obj, return_data):
-        persona = obj.persona
-        Usuario.objects.create_user(
-            username=persona.identificacion,
-            password=persona.identificacion,
-            persona_id=persona.pk
-        )
+        try:
+            persona = obj.persona
+            Usuario.objects.create_user(
+                username=persona.identificacion,
+                password=persona.identificacion,
+                persona_id=persona.pk
+            )
+        except:
+            pass
         return super().after_mutate(root, info, obj, return_data)
 
 
