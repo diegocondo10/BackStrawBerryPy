@@ -7,7 +7,7 @@ from graphene_django import DjangoObjectType
 
 from apps.Personas.graphql.interfaces import PadreDeFamiliaInterface
 from apps.Personas.models import Persona, Discapacidad, Alumno, Personal, FuncionPersonal
-from utils.functions import concat_if_exist
+from utils.functions import concat_if_exist, validate_can_delete
 
 
 class DiscapacidadType(DjangoObjectType):
@@ -17,7 +17,7 @@ class DiscapacidadType(DjangoObjectType):
         model = Discapacidad
 
     def resolve_can_delete(self: Discapacidad, info):
-        return self.persona_set.count() < 0
+        return validate_can_delete(self.persona_set.count())
 
 
 class FuncionPersonalType(DjangoObjectType):
@@ -27,7 +27,7 @@ class FuncionPersonalType(DjangoObjectType):
         model = FuncionPersonal
 
     def resolve_can_delete(self: FuncionPersonal, info):
-        return self.personal_set.count() < 0
+        return validate_can_delete(self.personal_set.count())
 
 
 class PersonaType(DjangoObjectType):
@@ -70,7 +70,7 @@ class PersonaType(DjangoObjectType):
         return self.get_apellidos()
 
     def resolve_can_delete(self: Persona, info):
-        return self.personal_set.count() < 0 or self.alumno.count() < 0
+        return validate_can_delete(self.personal_set.count()) and validate_can_delete(self.alumno.count())
 
 
 class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
@@ -111,10 +111,10 @@ class PersonalType(DjangoObjectType):
         return self.persona.__str__()
 
     def resolve_can_delete(self: Personal, info):
-        return self.aula_set.count() < 0 \
-               or self.coordinador.count() < 0 \
-               or self.sub_coordinador.count() < 0 \
-               or self.director.count() < 0
+        return validate_can_delete(self.aula_set.count()) \
+               and validate_can_delete(self.coordinador.count()) \
+               and validate_can_delete(self.sub_coordinador.count()) \
+               and validate_can_delete(self.director.count())
 
 
 class AlumnoType(DjangoObjectType):
@@ -144,4 +144,4 @@ class AlumnoType(DjangoObjectType):
         return self.persona.__str__()
 
     def resolve_can_delete(self: Alumno):
-        return self.alumnoaula_set.count() < 0
+        return validate_can_delete(self.alumnoaula_set.count())

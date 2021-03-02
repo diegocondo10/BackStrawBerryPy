@@ -49,3 +49,7 @@ def get_edad(born):
 
 def get_ordinal_num(numero):
     return NUMEROS_ORDINARIOS.get(f'{numero}')
+
+
+def validate_can_delete(value):
+    return value is None or value == 0

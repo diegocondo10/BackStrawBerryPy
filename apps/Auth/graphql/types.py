@@ -2,6 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from apps.Auth.models import Permiso, Grupo, Usuario
+from utils.functions import validate_can_delete
 
 
 class PermisoType(DjangoObjectType):
@@ -24,7 +25,7 @@ class GrupoType(DjangoObjectType):
         return self.permisos.get_queryset().count()
 
     def resolve_can_delete(self: Grupo, info):
-        return self.usuario_set.count() < 0
+        return validate_can_delete(self.usuario_set.count())
 
 
 class UsuarioType(DjangoObjectType):

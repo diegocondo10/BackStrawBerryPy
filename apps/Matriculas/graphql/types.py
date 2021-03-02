@@ -2,6 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from apps.Matriculas.models import PeriodoLectivo, Aula, AlumnoAula
+from utils.functions import validate_can_delete
 
 EstadosMatriculaEnum = graphene.Enum.from_enum(
     AlumnoAula.EstadosMatricula,
@@ -29,7 +30,7 @@ class PeriodoLectivoType(DjangoObjectType):
     can_delete = graphene.Boolean()
 
     def resolve_can_delete(self: PeriodoLectivo, info):
-        return self.aula_set.count() < 0
+        return validate_can_delete(self.aula_set.count())
 
     class Meta:
         model = PeriodoLectivo
@@ -80,4 +81,5 @@ class AlumnoAulaType(DjangoObjectType):
         return self.get_estado_matricula_display()
 
     def resolve_can_delete(self: AlumnoAula, info):
-        return self.alumno_aula.count() < 0 and self.aula.periodo.estado == PeriodoLectivo.EstadosPeriodo.ABIERTO.value
+        return validate_can_delete(self.alumno_aula.count()) \
+               and self.aula.periodo.estado == PeriodoLectivo.EstadosPeriodo.ABIERTO.value
