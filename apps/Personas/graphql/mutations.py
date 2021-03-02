@@ -50,7 +50,7 @@ class CreatePersonalMutation(DjangoCreateMutation):
             Usuario.objects.create_user(
                 username=persona.identificacion,
                 password=persona.identificacion,
-                persona_id=persona.pk
+                persona_id=persona.pk,
             )
         except:
             pass
