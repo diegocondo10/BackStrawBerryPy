@@ -10,10 +10,10 @@ class PersonasConfig(AppConfig):
         try:
             functiones_personal_default = [
                 dict(nombre='DOCENTE', codigo='docente'),
-                dict(nombre='SECRETARIA', codigo='secretaria'),
+                dict(nombre='SECRETARIO/A', codigo='secretaria'),
                 dict(nombre='CHOFER', codigo='chofer'),
                 dict(nombre='TERAPEUTA', codigo='terapeuta'),
-                dict(nombre='DIRECTOR', codigo='director'),
+                dict(nombre='DIRECTOR/A', codigo='director'),
             ]
             if functiones_personal_default.__len__() != FuncionPersonal.objects.count():
                 # FuncionPersonal.objects.bulk_create(functiones_personal_default)
