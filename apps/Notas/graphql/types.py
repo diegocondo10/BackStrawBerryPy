@@ -1,4 +1,3 @@
-import graphene
 from graphene_django import DjangoObjectType
 
 from apps.Notas.models import Componente, NotaAlumno, EvidenciaNotaAlumno

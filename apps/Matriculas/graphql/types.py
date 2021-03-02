@@ -26,6 +26,10 @@ class PeriodoLectivoType(DjangoObjectType):
         estados=graphene.List(EstadosMatriculaEnum, default_value=[])
     )
     habilitar_cierre = graphene.Boolean()
+    can_delete = graphene.Boolean()
+
+    def resolve_can_delete(self: PeriodoLectivo, info):
+        return self.aula_set.count() < 0
 
     class Meta:
         model = PeriodoLectivo
@@ -56,15 +60,24 @@ class PeriodoLectivoType(DjangoObjectType):
 
 
 class AulaType(DjangoObjectType):
+    can_delete = graphene.Boolean()
+
     class Meta:
         model = Aula
+
+    def resolve_can_delete(self: Aula, info):
+        return self.alumnoaula_set.count()
 
 
 class AlumnoAulaType(DjangoObjectType):
     estado_matricula = graphene.String()
+    can_delete = graphene.Boolean()
 
     class Meta:
         model = AlumnoAula
 
     def resolve_estado_matricula(self: AlumnoAula, info):
         return self.get_estado_matricula_display()
+
+    def resolve_can_delete(self: AlumnoAula, info):
+        return self.alumno_aula.count() < 0 and self.aula.periodo.estado == PeriodoLectivo.EstadosPeriodo.ABIERTO.value

@@ -11,13 +11,23 @@ from utils.functions import concat_if_exist
 
 
 class DiscapacidadType(DjangoObjectType):
+    can_delete = graphene.Boolean()
+
     class Meta:
         model = Discapacidad
 
+    def resolve_can_delete(self: Discapacidad, info):
+        return self.persona_set.count() < 0
+
 
 class FuncionPersonalType(DjangoObjectType):
+    can_delete = graphene.Boolean()
+
     class Meta:
         model = FuncionPersonal
+
+    def resolve_can_delete(self: FuncionPersonal, info):
+        return self.personal_set.count() < 0
 
 
 class PersonaType(DjangoObjectType):
@@ -29,6 +39,7 @@ class PersonaType(DjangoObjectType):
 
     nombres = graphene.String()
     apellidos = graphene.String()
+    can_delete = graphene.Boolean()
 
     class Meta:
         model = Persona
@@ -57,6 +68,9 @@ class PersonaType(DjangoObjectType):
 
     def resolve_apellidos(self: Persona, info):
         return self.get_apellidos()
+
+    def resolve_can_delete(self: Persona, info):
+        return self.personal_set.count() < 0 or self.alumno.count() < 0
 
 
 class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
@@ -88,6 +102,7 @@ class PadreDeFamiliaType(graphene.ObjectType, PadreDeFamiliaInterface):
 class PersonalType(DjangoObjectType):
     info = GenericScalar()
     persona_str = graphene.String()
+    can_delete = graphene.Boolean()
 
     class Meta:
         model = Personal
@@ -95,14 +110,19 @@ class PersonalType(DjangoObjectType):
     def resolve_persona_str(self: Personal, info):
         return self.persona.__str__()
 
+    def resolve_can_delete(self: Personal, info):
+        return self.aula_set.count() < 0 \
+               or self.coordinador.count() < 0 \
+               or self.sub_coordinador.count() < 0 \
+               or self.director.count() < 0
+
 
 class AlumnoType(DjangoObjectType):
     padre = graphene.Field(PadreDeFamiliaType)
     madre = graphene.Field(PadreDeFamiliaType)
     representante = GenericScalar()
     contacto_emergencia = GenericScalar()
-    test = GenericScalar()
-
+    can_delete = graphene.Boolean()
     persona_str = graphene.String()
 
     class Meta:
@@ -122,3 +142,6 @@ class AlumnoType(DjangoObjectType):
 
     def resolve_persona_str(self: Alumno, info):
         return self.persona.__str__()
+
+    def resolve_can_delete(self: Alumno):
+        return self.alumnoaula_set.count() < 0

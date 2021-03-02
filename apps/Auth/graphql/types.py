@@ -12,6 +12,7 @@ class PermisoType(DjangoObjectType):
 class GrupoType(DjangoObjectType):
     permisos_disponibles = graphene.List(PermisoType)
     numero_permisos = graphene.Int()
+    can_delete = graphene.Boolean()
 
     class Meta:
         model = Grupo
@@ -22,12 +23,16 @@ class GrupoType(DjangoObjectType):
     def resolve_numero_permisos(self: Grupo, info):
         return self.permisos.get_queryset().count()
 
+    def resolve_can_delete(self: Grupo, info):
+        return self.usuario_set.count() < 0
+
 
 class UsuarioType(DjangoObjectType):
     permisos_disponibles = graphene.List(PermisoType)
     grupos_disponibles = graphene.List(GrupoType)
     numero_permisos = graphene.Int()
     numero_grupos = graphene.Int()
+    can_delete = graphene.Boolean()
 
     class Meta:
         model = Usuario
@@ -43,3 +48,6 @@ class UsuarioType(DjangoObjectType):
 
     def resolve_numero_grupos(self: Usuario, info):
         return self.grupos.get_queryset().count()
+
+    def resolve_can_delete(self: Usuario, info):
+        return self.persona_id is None
