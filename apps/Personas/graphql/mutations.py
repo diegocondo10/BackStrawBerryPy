@@ -1,5 +1,4 @@
 import graphene
-from graphene.types.generic import GenericScalar
 from graphene_django_cud.mutations import DjangoCreateMutation, DjangoUpdateMutation, DjangoDeleteMutation
 
 from apps.Auth.models import Usuario
@@ -49,7 +48,7 @@ class CreatePersonalMutation(DjangoCreateMutation):
         persona = obj.persona
         Usuario.objects.create_user(
             username=persona.identificacion,
-            password='1234ABC',
+            password=persona.identificacion,
             persona_id=persona.pk
         )
         return super().after_mutate(root, info, obj, return_data)
@@ -72,6 +71,16 @@ class CreateAlumnoMutation(DjangoCreateMutation):
             "padre": graphene.Field(PadreDeFamiliaInput),
             "madre": graphene.InputField(PadreDeFamiliaInput),
         }
+
+    @classmethod
+    def after_mutate(cls, root, info, obj, return_data):
+        persona = obj.persona
+        Usuario.objects.create_user(
+            username=persona.identificacion,
+            password=persona.identificacion,
+            persona_id=persona.pk
+        )
+        return super().after_mutate(root, info, obj, return_data)
 
 
 class UpdateAlumnoMutation(DjangoUpdateMutation):
