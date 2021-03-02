@@ -143,5 +143,5 @@ class AlumnoType(DjangoObjectType):
     def resolve_persona_str(self: Alumno, info):
         return self.persona.__str__()
 
-    def resolve_can_delete(self: Alumno):
+    def resolve_can_delete(self: Alumno, info):
         return validate_can_delete(self.alumnoaula_set.count())
